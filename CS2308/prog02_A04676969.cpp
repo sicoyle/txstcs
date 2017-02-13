@@ -13,10 +13,10 @@ Instructor: Komogortsev, TSU
 using namespace std;
 
 //Prototypes
-char * Token(char * line, const int SIZE, int position);
+char * Token(char * line, int position, char * tokenReturnBuffer);
 void AssignInfo(char line[], const int SIZE, char buffer[], const int SIZE2, char Name1[], char Name2[],
 	    char ID[], char g1[], char g2[], char g3[],
-	     char g4[], char g5[], char g6[]);
+	     char g4[], char g5[], char g6[], char * returningBuf);
 
 //Create file objects
 ifstream fin;
@@ -43,12 +43,19 @@ int main()
 	while(!fin.eof())
 	{	
 		fin.getline(line, SIZE, '\0');
+char * returnBuffer = new char[256];
 		cout << "This is what I read in: " << line << endl;
 		
 		//cout << "This is what is returned from token (NAME): " << 
 		
+
+		cout << "position: ";
+		cin >> position;
+
+		Token(line, position, returnBuffer); 
+
 		//Token(line, SIZE, 0) << endl;
-		AssignInfo(line, SIZE, buffer, SIZE2, Name1, Name2, ID, g1, g2, g3, g4, g5, g6);
+		//AssignInfo(line, SIZE, buffer, SIZE2, Name1, Name2, ID, g1, g2, g3, g4, g5, g6, returnBuffer);
 
 	}
 
@@ -62,21 +69,21 @@ int main()
 /***********************************************
 Function 1: Create tokenizer to split string
 ***********************************************/
-char * Token(char * line, const int SIZE, int position)
+char * Token(char * line, int position, char * tokenReturnBuffer)
 {
 	char delimiter = ' ';
 	char delimiter2 = '\t';	
 	char * iterator = line;
 	int count = 0;
-	
+int letterCount = 0;
 	do
 	{
-		if(( * iterator == delimiter) && (* iterator == delimiter2))
+		if(( * iterator == delimiter) || (* iterator == delimiter2))
 		{
 			count++;
 		}
 
-		while (( * iterator == delimiter) && ( * iterator == delimiter2))
+		while (( * iterator == delimiter) || ( * iterator == delimiter2))
 		{
 			iterator++;
 		}
@@ -87,39 +94,38 @@ char * Token(char * line, const int SIZE, int position)
 //Make new iterator. While not delimiter, iterator2 ++, once == to delimiter *iterator2 = '\0'
 	char * iterator2 = iterator;
 
-	while ((* iterator2 != delimiter) && (* iterator2 != delimiter2))
+	while ((* iterator2 != delimiter) && (* iterator2 != delimiter2)){
+		tokenReturnBuffer[letterCount++] = * iterator2;
 		iterator2++;
-
-	if(* iterator2 == delimiter)
-		* iterator2 = '\0';
-
-return iterator;
+	}
+cout << "returning token: " << tokenReturnBuffer << endl;
+return tokenReturnBuffer;
 }
 
-void AssignInfo(char line[], const int SIZE, char buffer[], const int SIZE2, char Name1[], char Name2[], char ID[], 
-		char g1[], char g2[], char g3[], char g4[], char g5[], char g6[])
+/*void AssignInfo(char line[], const int SIZE, char buffer[], const int SIZE2, char Name1[], char Name2[], char ID[], 
+		char g1[], char g2[], char g3[], char g4[], char g5[], char g6[], char * returningBuf)
 
 {
-	Name1 = Token(line, SIZE, 0);
+	Name1 = Token(line, SIZE, 0, returningBuf);
 
 	cout << "Name1: " << Name1 << endl;
 
-	Name2 = Token(line, SIZE, 1);
+	Name2 = Token(line, SIZE, 1, returningBuf);
 
-	ID = Token(line, SIZE, 2);
+	ID = Token(line, SIZE, 2, returningBuf);
 	
-	g1 = Token(line, SIZE, 3);
-	g2 = Token(line, SIZE, 4);
-	g3 = Token(line, SIZE, 5);
-	g4 = Token(line, SIZE, 6);
-	g5 = Token(line, SIZE, 7);
+	g1 = Token(line, SIZE, 3, returningBuf);
+	g2 = Token(line, SIZE, 4, returningBuf);
+	g3 = Token(line, SIZE, 5, returningBuf);
+	g4 = Token(line, SIZE, 6, returningBuf);
+	g5 = Token(line, SIZE, 7, returningBuf);
 	
-	g6 = Token(line, SIZE, 8);
+	g6 = Token(line, SIZE, 8, returningBuf);
 
 	cout << "Info: " << Name2 << " " << ID << " " << g1 << " " << g2 << " " << g3 << " " << g4 << " " << g5 << " " << g6 << endl;
 }
 
-
+*/
 
 
 
