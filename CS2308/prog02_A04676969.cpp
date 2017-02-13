@@ -75,7 +75,7 @@ char * Token(char * line, int position, char * tokenReturnBuffer)
 	char delimiter2 = '\t';	
 	char * iterator = line;
 	int count = 0;
-int letterCount = 0;
+	int letterCount = 0;
 	do
 	{
 		if(( * iterator == delimiter) || (* iterator == delimiter2))
@@ -94,7 +94,8 @@ int letterCount = 0;
 //Make new iterator. While not delimiter, iterator2 ++, once == to delimiter *iterator2 = '\0'
 	char * iterator2 = iterator;
 
-	while ((* iterator2 != delimiter) && (* iterator2 != delimiter2)){
+	while ((* iterator2 != delimiter) && (* iterator2 != delimiter2))
+	{
 		tokenReturnBuffer[letterCount++] = * iterator2;
 		iterator2++;
 	}
