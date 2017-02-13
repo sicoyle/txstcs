@@ -1,0 +1,73 @@
+/*****************************************************************
+Name: Samantha Coyle
+Date: January 30, 2017
+Problem Number: 1
+Hours spent solving the problem: 9
+Instructor: Komogortsev, TSU
+******************************************************************/
+1.  Including all libraries and proper headings
+
+2.  List all prototypes
+	Prototype for converting time stamp
+	Prototype for converting temperature
+
+3.  Create file objects
+
+4.  Start main function
+
+5.  List all variables and arrays **19 primitive operations**
+
+6.  Open the files
+
+7.  Set data to a fixed decimal point setting of 2
+
+8.  Varify that the files open with an if statement
+
+9.  Read in the number of samples from the input file
+    **1 primitive operation**	
+
+10. Start a for loop to iterate for each sample number
+    **n(2n+1) primitive operations**
+
+	11. Read in initial time stamp **n primitive operations**
+		Rearrange into human readable time stamp
+		**14+n primitive operations**		
+
+	12. Read in temperature
+	    **n primitive operations**
+
+	13. If temperature type is wrong, give error
+	    **2+n primitive operations**
+
+	14. If temperature is in Fahrenheit:
+		Convert to double and then convert to Celsius
+		**10n^2 +17n+6 primitive operations**
+		
+	15. If temperature is in Celcius
+		Convert to double
+		**5n^2 +10n+5 primitive operation**
+
+	16. If temperature < 0, give error message
+	    **1+n primitive operation**
+
+	17. Add all temperatures to total temperature
+	    **2+n primitive operations**
+
+	18. Display data
+		Create a for loop to loop through date
+		**10n(2n+1) primitive operations**
+		Create a for loop to loop through time
+		**4n(2n+1) primitive operations**
+	
+	19. Calculate average temperature and output it
+	    **2 primitive operations**
+
+	22. Close the input and output file
+
+	23. Return 0
+
+	23. Close main function
+
+
+T(n) = 45n^2 +46n +35 
+O(n^2)
