@@ -14,7 +14,7 @@ using namespace std;
 
 //Prototypes
 char * Token(char * line, int position, char * tokenReturnBuffer);
-void AssignInfo(char line[], const int SIZE, char buffer[], const int SIZE2, char Name1[], char Name2[],
+void AssignInfo(char line[], char First[], char Last[],
 	    char ID[], char g1[], char g2[], char g3[],
 	     char g4[], char g5[], char g6[], char * returningBuf);
 
@@ -30,8 +30,8 @@ int main()
 	char line[SIZE];
 	char buffer[SIZE2];
 	int position = 0;
-	char Name1[11];
-	char Name2[13];
+	char First[11];
+	char Last[13];
 	char ID[7], g1[5], g2[5], g3[5], g4[5], g5[5];
 	char g6[5] = {0,0,0,0,'\0'};
 
@@ -50,13 +50,13 @@ char * returnBuffer = new char[256];
 		
 
 		cout << "position: ";
-		cin >> position;
+	//	cin >> position;
 
-		Token(line, position, returnBuffer); 
+		//First = Token(line, 0,); 
 
-		//Token(line, SIZE, 0) << endl;
-		//AssignInfo(line, SIZE, buffer, SIZE2, Name1, Name2, ID, g1, g2, g3, g4, g5, g6, returnBuffer);
-
+		//atoi(Token(line, 2, returnBuffer)) << endl;
+		AssignInfo(line, First, Last, ID, g1, g2, g3, g4, g5, g6, returnBuffer);
+		cout << "ID " << ID << endl;	
 	}
 
 	//Close the files
@@ -99,34 +99,33 @@ char * Token(char * line, int position, char * tokenReturnBuffer)
 		tokenReturnBuffer[letterCount++] = * iterator2;
 		iterator2++;
 	}
+
+	tokenReturnBuffer[letterCount] = '\0';
 cout << "returning token: " << tokenReturnBuffer << endl;
 return tokenReturnBuffer;
 }
 
-/*void AssignInfo(char line[], const int SIZE, char buffer[], const int SIZE2, char Name1[], char Name2[], char ID[], 
+void AssignInfo(char line[], char First[], char Last[], char ID[], 
 		char g1[], char g2[], char g3[], char g4[], char g5[], char g6[], char * returningBuf)
-
 {
-	Name1 = Token(line, SIZE, 0, returningBuf);
+	First = Token(line, 0, returningBuf);
 
-	cout << "Name1: " << Name1 << endl;
+	cout << "Name1: " << First << endl;
 
-	Name2 = Token(line, SIZE, 1, returningBuf);
+	Last = Token(line, 1, returningBuf);
+	cout << "Last: " << Last << endl;
+	ID = Token(line, 2, returningBuf);
+	g1 = Token(line, 3, returningBuf);
+	g2 = Token(line, 4, returningBuf);
+	g3 = Token(line, 5, returningBuf);
+	g4 = Token(line, 6, returningBuf);
+	g5 = Token(line, 7, returningBuf);
+	g6 = Token(line, 8, returningBuf);
 
-	ID = Token(line, SIZE, 2, returningBuf);
-	
-	g1 = Token(line, SIZE, 3, returningBuf);
-	g2 = Token(line, SIZE, 4, returningBuf);
-	g3 = Token(line, SIZE, 5, returningBuf);
-	g4 = Token(line, SIZE, 6, returningBuf);
-	g5 = Token(line, SIZE, 7, returningBuf);
-	
-	g6 = Token(line, SIZE, 8, returningBuf);
-
-	cout << "Info: " << Name2 << " " << ID << " " << g1 << " " << g2 << " " << g3 << " " << g4 << " " << g5 << " " << g6 << endl;
+	cout << "Info: " << Last << " " << ID << " " << g1 << " " << g2 << " " << g3 << " " << g4 << " " << g5 << " " << g6 << endl;
 }
 
-*/
+
 
 
 
