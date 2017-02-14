@@ -15,12 +15,10 @@ using namespace std;
 
 //Prototypes
 char *Token(char *line, int position, char *tokenReturnBuffer);
-int FindLowest(int grade1, int grade2, int grade3,
-		int grade4, int grade5, int grade6);
-int Average(int grade1, int grade2, int grade3, int grade4,
-		int grade5, int grade6, int lowestGrade);
-int Errors(int grade1, int grade2, int grade3, int grade4,
-		int grade5, int grade6);
+int FindLowest(int grade[]);
+int Average(int grade[], int lowestGrade, const int NumGrades);
+int Errors(int grade[], const int NumGrades);
+//void OutputData(int grade[], const int NumGrades, 
 //Create file objects
 ifstream fin;
 ofstream fout;
@@ -29,16 +27,17 @@ int main()
 {
 	//Declare variables
 	const int SIZE = 256;
+	const int NumGrades = 6;
 	char line[SIZE];
 	int position = 0;
 	char *first;
 	char *last;
 	int ID = 0;
-	int grade1 = 0, grade2 = 0, grade3 = 0,
-	    grade4 = 0, grade5 = 0, grade6 = -1;
+	int grade[6];
+	grade[NumGrades] = 1000;
 	int lowestGrade = 0;
 	int AverageGrade = 0;
-	//char * isThereGrade6;
+	int ErrorVariable = 0;
 
 	//Open the files
 	fin.open("student_input.dat");
@@ -70,21 +69,23 @@ int main()
 		first = Token(line, 0, returnBuffer);
 		last = Token(line, 1, returnBuffer);
 		ID = atoi(Token(line, 2, returnBuffer));
-		grade1 = atoi(Token(line, 3, returnBuffer));
-		grade2 = atoi(Token(line, 4, returnBuffer));
-		grade3 = atoi(Token(line, 5, returnBuffer));
-		grade4 = atoi(Token(line, 6, returnBuffer));
-		grade5 = atoi(Token(line, 7, returnBuffer));
-		grade6 = atoi(Token(line, 8, returnBuffer));
+		grade[0] = atoi(Token(line, 3, returnBuffer));
+		grade[1] = atoi(Token(line, 4, returnBuffer));
+		grade[2] = atoi(Token(line, 5, returnBuffer));
+		grade[3] = atoi(Token(line, 6, returnBuffer));
+		grade[4] = atoi(Token(line, 7, returnBuffer));
+		grade[5] = atoi(Token(line, 8, returnBuffer));
 		
-		lowestGrade = FindLowest(grade1, grade2, grade3, grade4, grade5, grade6);	
+		lowestGrade = FindLowest(grade);	
 		cout << "Lowest grade: " << lowestGrade << endl;
 
-		AverageGrade = Average(grade1, grade2, grade3, grade4, grade5, grade6, lowestGrade);
+		AverageGrade = Average(grade, lowestGrade, NumGrades);
 		cout << "average: " << AverageGrade << endl;
 
-		Errors(grade1, grade2, grade3, grade4, grade5, grade6);
-
+		ErrorVariable = Errors(grade, NumGrades);
+		if(ErrorVariable == -1)
+			return -1;
+		
 	}
 
 	//Close the files
@@ -132,26 +133,22 @@ char *Token(char *line, int position, char *tokenReturnBuffer)
 /**********************************************
 Function 2: If there are 6 grades, drop lowest.
 **********************************************/
-int FindLowest(int grade1, int grade2, int grade3,
-		int grade4, int grade5, int grade6)
+int FindLowest(int grade[])
 {
-	int lowest = grade1;
+	int lowest = grade[0];
 
-	if(grade6)
-	{
-		if(grade2 < lowest)
-			lowest = grade2;
-		else if(grade3 < lowest)
-			lowest = grade3;
-		else if(grade4 < lowest)
-			lowest = grade4;
-		else if(grade5 < lowest)
-			lowest = grade5;
-		else if(grade6 < lowest)
-			lowest = grade6;
-	}
-
-	if(!grade6)
+		if(grade[1] < lowest)
+			lowest = grade[1];
+		else if(grade[2] < lowest)
+			lowest = grade[2];
+		else if(grade[3] < lowest)
+			lowest = grade[3];
+		else if(grade[4] < lowest)
+			lowest = grade[4];
+		else if(grade[5] < lowest)
+			lowest = grade[5];
+	
+	if(grade[5] = 1000)
 		lowest = 0;
 	
 	return lowest;
@@ -161,17 +158,18 @@ int FindLowest(int grade1, int grade2, int grade3,
 /*******************************************
 Function 3: Find average grade
 *******************************************/
-int Average(int grade1, int grade2, int grade3, int grade4
-		,int grade5, int grade6, int lowestGrade)
+int Average(int grade[], int lowestGrade, const int NumGrades)
 {
 	int average = 0;
 	int total = 0;
-	total = grade1 + grade2 + grade3 + grade4 + grade5 + grade6;
+
+	for(int index = 0; index < NumGrades; index++)
+		total += grade[index];
 	
-	if(grade6 != 0)
+	if(grade[5] != 1000)
 		average = total/6;
 	else
-		average = total/5;
+		average = (total-1000)/5;
 	return average;
 }
 
@@ -180,28 +178,24 @@ Function 4: Provide error message if:
 		1. There is a negative grade
 		2. There are less than 6 grades
 ********************************************/
-int Error(int grade1, int grade2, int grade3, int grade4,
-		int grade5, int grade6)
+int Error(int grade[], const int NumGrades)
 {
-	if(grade6 = 0)
+	if(grade[5] = 1000)
 	{
-		cout << "Error: There are less than 6 grades.";
-		cout << "Terminating program." << endl;
-		return -1;
+		cout << "Error: There are less than 6 grades./n";
+		return 0;
 	}
-
-	if(grade1 < 0)
-		cout << "Error: Negative grade/n";
-	if(grade2 < 0)
-		cout << "Error: Negative grade/n";
-	if(grade3 < 0)
-		cout << "Error: Negative grade/n";
-	if(grade4 < 0)
-		cout << "Error: Negative grade/n";
-	if(grade5 < 0)
-		cout << "Error: Negative grade/n";
-	if(grade6 < 0)
-		cout << "Error: Negative grade/n";
-
-	return 0;
+	else
+		return 0;
+	for(int index = 0; index < NumGrades; index++)
+	{
+		if(grade[index] < 0)
+		{
+			cout << "Error: Negative grade/n";
+			cout << "Terminating program./n";
+			return -1;
+		}
+		else
+			return 0;
+	}
 }
