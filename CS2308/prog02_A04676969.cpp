@@ -16,9 +16,13 @@ using namespace std;
 //Prototypes
 char *Token(char *line, int position, char *tokenReturnBuffer);
 int FindLowest(int grade[]);
-int Average(int grade[], int lowestGrade, const int NumGrades);
+double Average(int grade[], int lowestGrade, const int NumGrades);
 int Errors(int grade[], const int NumGrades);
-//void OutputData(int grade[], const int NumGrades, 
+char CalculateLetterGrade(double AverageGrade);
+void OutputStudentData(int grade[], const int NumGrades, char * first,
+		char * last, int ID, double AverageGrade, char letterGrade);
+void OutputGradeTotals(char letterGrade);
+
 //Create file objects
 ifstream fin;
 ofstream fout;
@@ -33,12 +37,12 @@ int main()
 	char *first;
 	char *last;
 	int ID = 0;
-	int grade[6];
-	grade[NumGrades] = 1000;
+	int grade[NumGrades];
+	grade[5] = 1000;
 	int lowestGrade = 0;
-	int AverageGrade = 0;
+	double AverageGrade = 0.0;
 	int ErrorVariable = 0;
-
+	char letterGrade;
 	//Open the files
 	fin.open("student_input.dat");
 	fout.open("student_results.dat");
@@ -85,9 +89,11 @@ int main()
 		ErrorVariable = Errors(grade, NumGrades);
 		if(ErrorVariable == -1)
 			return -1;
-		
+		letterGrade = CalculateLetterGrade(AverageGrade);		
+		OutputStudentData(grade, NumGrades, first, last, ID, AverageGrade, letterGrade);
 	}
 
+		OutputGradeTotals(letterGrade);
 	//Close the files
 	fin.close();
 	fout.close();
@@ -158,18 +164,21 @@ int FindLowest(int grade[])
 /*******************************************
 Function 3: Find average grade
 *******************************************/
-int Average(int grade[], int lowestGrade, const int NumGrades)
+double Average(int grade[], int lowestGrade, const int NumGrades)
 {
-	int average = 0;
+	double average = 0.0;
 	int total = 0;
 
 	for(int index = 0; index < NumGrades; index++)
 		total += grade[index];
 	
-	if(grade[5] != 1000)
-		average = total/6;
-	else
-		average = (total-1000)/5;
+	if (grade[5] != 1000)
+		average = (total-lowestGrade)/5;
+
+	if(grade[5] == 1000)
+		average = (total - 1000)/5;
+
+	average = total /5;
 	return average;
 }
 
@@ -185,8 +194,7 @@ int Error(int grade[], const int NumGrades)
 		cout << "Error: There are less than 6 grades./n";
 		return 0;
 	}
-	else
-		return 0;
+	
 	for(int index = 0; index < NumGrades; index++)
 	{
 		if(grade[index] < 0)
@@ -198,4 +206,65 @@ int Error(int grade[], const int NumGrades)
 		else
 			return 0;
 	}
+}
+
+/*****************************************************
+Function 5: Find the letter grade totals
+*****************************************************/
+char CalculateLetterGrade(double AverageGrade)
+{
+	char letter;
+	
+	if(AverageGrade >= 89.5)
+		letter = 'A';
+	if(AverageGrade >= 79.5 && AverageGrade < 89.5)
+		letter = 'B';
+	if(AverageGrade >= 69.5 && AverageGrade < 79.5)
+		letter = 'C';
+	if(AverageGrade >= 59.5 && AverageGrade < 69.5)
+		letter = 'D';
+	else
+		letter = 'F';
+	return letter;
+}
+
+/*****************************************************
+Function 6: Print all data to output file
+*****************************************************/
+void OutputStudentData(int grade[], const int NumGrades, char * first,
+		char * last, int ID, double AverageGrade, char letterGrade)
+{
+	fout << setw(20) << "Grade Report/n/n";
+	fout << setw(5) << "Last Name" << setw(5) << "First Name";
+	fout << setw(5) << "ID" << setw(5) << "Average Score";
+	fout << setw(5) << "Grade" << endl;
+
+	fout << setw(5) << last << setw(5) << first;
+	fout << setw(5) << ID << setw(5) << setprecision(1) << AverageGrade;
+	fout << setw(5) << letterGrade << endl;
+} 
+/***************************************************
+Function 7: Display grade letter totals)
+***************************************************/
+void OutputGradeTotals(char letterGrade)
+{
+
+	int totalA = 0, totalB = 0, totalC = 0, totalD = 0, totalF = 0;
+	if(letterGrade == 'A')
+		totalA++;
+	if(letterGrade == 'B')
+		totalB++;
+	if(letterGrade == 'C')
+		totalC++;
+	if(letterGrade == 'D')
+		totalD++;
+	if(letterGrade == 'F')
+		totalF++;
+
+	fout << setw(5) << "Grade Totals:" << endl;
+	fout << setw(5) << "A - " << totalA << endl;
+	fout << setw(5) << "B - " << totalB << endl;
+	fout << setw(5) << "C - " << totalC << endl;
+	fout << setw(5) << "D - " << totalD << endl;
+	fout << setw(5) << "F - " << totalF << endl;
 }
