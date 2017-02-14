@@ -17,7 +17,7 @@ using namespace std;
 char *Token(char *line, int position, char *tokenReturnBuffer);
 int FindLowest(int grade[]);
 double Average(int grade[], int lowestGrade, const int NumGrades);
-int Errors(int grade[], const int NumGrades);
+//int Errors(int grade[], const int NumGrades);
 char CalculateLetterGrade(double AverageGrade);
 void OutputStudentData(int grade[], const int NumGrades, char * first,
 		char * last, int ID, double AverageGrade, char letterGrade);
@@ -50,14 +50,14 @@ int main()
 	//Check that the files open properly
 	if(fin.fail())
 	{
-		cout << "Input file did not open. Terminating program";
+		cout << "Input file did not open. Terminating program.";
 		cout << endl;
 		return -1;
 	}
 	
 	if(fout.fail())
 	{
-		cout << "Output file did not open. Terminating program";
+		cout << "Output file did not open. Terminating program.";
 		cout << endl;
 		return -1;
 	}
@@ -86,9 +86,18 @@ int main()
 		AverageGrade = Average(grade, lowestGrade, NumGrades);
 		cout << "average: " << AverageGrade << endl;
 
-		ErrorVariable = Errors(grade, NumGrades);
-		if(ErrorVariable == -1)
-			return -1;
+		if(grade[5] == 1000)
+			cout << "There are only 5 grades.\n";
+		for(int index = 0; index < NumGrades; index++)
+		{
+			if(grade[index] < 0)
+			{
+				cout << "Error: Negative grade.\n";
+				cout << "Terminating program.";
+				return -1;
+			}
+		}
+
 		letterGrade = CalculateLetterGrade(AverageGrade);		
 		OutputStudentData(grade, NumGrades, first, last, ID, AverageGrade, letterGrade);
 	}
@@ -182,34 +191,8 @@ double Average(int grade[], int lowestGrade, const int NumGrades)
 	return average;
 }
 
-/********************************************
-Function 4: Provide error message if:
-		1. There is a negative grade
-		2. There are less than 6 grades
-********************************************/
-int Error(int grade[], const int NumGrades)
-{
-	if(grade[5] = 1000)
-	{
-		cout << "Error: There are less than 6 grades./n";
-		return 0;
-	}
-	
-	for(int index = 0; index < NumGrades; index++)
-	{
-		if(grade[index] < 0)
-		{
-			cout << "Error: Negative grade/n";
-			cout << "Terminating program./n";
-			return -1;
-		}
-		else
-			return 0;
-	}
-}
-
 /*****************************************************
-Function 5: Find the letter grade totals
+Function 4: Find the letter grade totals
 *****************************************************/
 char CalculateLetterGrade(double AverageGrade)
 {
@@ -229,7 +212,7 @@ char CalculateLetterGrade(double AverageGrade)
 }
 
 /*****************************************************
-Function 6: Print all data to output file
+Function 5: Print all data to output file
 *****************************************************/
 void OutputStudentData(int grade[], const int NumGrades, char * first,
 		char * last, int ID, double AverageGrade, char letterGrade)
@@ -244,7 +227,7 @@ void OutputStudentData(int grade[], const int NumGrades, char * first,
 	fout << setw(5) << letterGrade << endl;
 } 
 /***************************************************
-Function 7: Display grade letter totals)
+Function 6: Display grade letter totals)
 ***************************************************/
 void OutputGradeTotals(char letterGrade)
 {
