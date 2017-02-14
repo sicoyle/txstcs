@@ -2,21 +2,19 @@
 Name: Samantha Coyle
 Date: February 14, 2017
 Problem Number: 2
-Hours spent solving the problem: 4
+Hours spent solving the problem: 6
 Instructor: Komogortsev, TSU
 ****************************************/
 #include <fstream>
 #include <iostream>
 #include <iomanip>
 #include <cstring>
+#include <stdlib.h>
 
 using namespace std;
 
 //Prototypes
 char * Token(char * line, int position, char * tokenReturnBuffer);
-void AssignInfo(char line[], char First[], char Last[],
-	    char ID[], char g1[], char g2[], char g3[],
-	     char g4[], char g5[], char g6[], char * returningBuf);
 
 //Create file objects
 ifstream fin;
@@ -26,14 +24,13 @@ int main()
 {
 	//Declare variables
 	const int SIZE = 256;
-	const int SIZE2 = 15;
 	char line[SIZE];
-	char buffer[SIZE2];
 	int position = 0;
-	char First[11];
-	char Last[13];
-	char ID[7], g1[5], g2[5], g3[5], g4[5], g5[5];
-	char g6[5] = {0,0,0,0,'\0'};
+	char First[11] = {'\0'};
+	char Last[13] = {'\0'};
+	int ID = 0;
+	int grade1 = 0, grade2 = 0, grade3 = 0, 
+	    grade4 = 0, grade5 = 0, grade6 = 0;
 
 	//Open the files
 	fin.open("student_input.dat");
@@ -42,20 +39,21 @@ int main()
 	//Read in data
 	while(!fin.eof())
 	{	
-		fin.getline(line, SIZE, '\0');
-char * returnBuffer = new char[256];
+		char * returnBuffer = new char[256];
+		//Read in the data
+		fin.getline(line, SIZE);
 		cout << "This is what I read in: " << line << endl;
-		
-		//cout << "This is what is returned from token (NAME): " << 
-		
+		 
+		First  = Token(line, 0, returnBuffer);
+		Last   = Token(line, 1, returnBuffer);
+		ID     = atoi(Token(line, 2, returnBuffer));
+		grade1 = atoi(Token(line, 3, returnBuffer));
+		grade2 = atoi(Token(line, 4, returnBuffer));
+		grade3 = atoi(Token(line, 5, returnBuffer));
+		grade4 = atoi(Token(line, 6, returnBuffer));
+		grade5 = atoi(Token(line, 7, returnBuffer));
+		grade6 = atoi(Token(line, 8, returnBuffer));
 
-		cout << "position: ";
-	//	cin >> position;
-
-		//First = Token(line, 0,); 
-
-		//atoi(Token(line, 2, returnBuffer)) << endl;
-		AssignInfo(line, First, Last, ID, g1, g2, g3, g4, g5, g6, returnBuffer);
 		cout << "ID " << ID << endl;	
 	}
 
@@ -67,7 +65,7 @@ char * returnBuffer = new char[256];
 	}
 
 /***********************************************
-Function 1: Create tokenizer to split string
+Function 1: Create tokenizer to split up string
 ***********************************************/
 char * Token(char * line, int position, char * tokenReturnBuffer)
 {
@@ -105,26 +103,24 @@ cout << "returning token: " << tokenReturnBuffer << endl;
 return tokenReturnBuffer;
 }
 
-void AssignInfo(char line[], char First[], char Last[], char ID[], 
-		char g1[], char g2[], char g3[], char g4[], char g5[], char g6[], char * returningBuf)
+
+
+
+
+
+
+/*
+void AssignInfo(char line[], char First[], char Last[], int ID, 
+		int grade1, int grade2, int grade3, int grade4, int grade5, int grade6, char * returningBuf)
 {
-	First = Token(line, 0, returningBuf);
 
 	cout << "Name1: " << First << endl;
 
-	Last = Token(line, 1, returningBuf);
 	cout << "Last: " << Last << endl;
-	ID = Token(line, 2, returningBuf);
-	g1 = Token(line, 3, returningBuf);
-	g2 = Token(line, 4, returningBuf);
-	g3 = Token(line, 5, returningBuf);
-	g4 = Token(line, 6, returningBuf);
-	g5 = Token(line, 7, returningBuf);
-	g6 = Token(line, 8, returningBuf);
 
-	cout << "Info: " << Last << " " << ID << " " << g1 << " " << g2 << " " << g3 << " " << g4 << " " << g5 << " " << g6 << endl;
+	cout << "Info: " << First << " " << Last << " " << ID << " " << grade1 << " " << grade2 << " " << grade3 << " " << grade4 << " " << grade5 << " " << grade6 << endl;
 }
-
+*/
 
 
 
