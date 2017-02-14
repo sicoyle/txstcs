@@ -15,7 +15,10 @@ using namespace std;
 
 //Prototypes
 char *Token(char *line, int position, char *tokenReturnBuffer);
-
+int FindLowest(int grade1, int grade2, int grade3,
+		int grade4, int grade5, int grade6);
+int Average(int grade1, int grade2, int grade3, int grade4,
+		int grade5, int grade6, int lowestGrade);
 //Create file objects
 ifstream fin;
 ofstream fout;
@@ -30,19 +33,38 @@ int main()
 	char *last;
 	int ID = 0;
 	int grade1 = 0, grade2 = 0, grade3 = 0,
-	    grade4 = 0, grade5 = 0, grade6 = 0;
-	//char *firstName, lastName;
+	    grade4 = 0, grade5 = 0, grade6 = -1;
+	int lowestGrade = 0;
+	int AverageGrade = 0;
+	//char * isThereGrade6;
 
 	//Open the files
 	fin.open("student_input.dat");
 	fout.open("student_results.dat");
 
+	//Check that the files open properly
+	if(fin.fail())
+	{
+		cout << "Input file did not open. Terminating program";
+		cout << endl;
+		return -1;
+	}
+	
+	if(fout.fail())
+	{
+		cout << "Output file did not open. Terminating program";
+		cout << endl;
+		return -1;
+	}
+
 	//Read in data
-	while (fin.getline(line, SIZE)) {
+	while (fin.getline(line, SIZE)) 
+	{
 		char *returnBuffer = new char[256];
 		//Read in the data
 		cout << "This is what I read in: " << line << endl;
 
+		//Assign values to variables through calling Token function
 		first = Token(line, 0, returnBuffer);
 		last = Token(line, 1, returnBuffer);
 		ID = atoi(Token(line, 2, returnBuffer));
@@ -52,8 +74,12 @@ int main()
 		grade4 = atoi(Token(line, 6, returnBuffer));
 		grade5 = atoi(Token(line, 7, returnBuffer));
 		grade6 = atoi(Token(line, 8, returnBuffer));
+		
+		lowestGrade = FindLowest(grade1, grade2, grade3, grade4, grade5, grade6);	
+		cout << "Lowest grade: " << lowestGrade << endl;
 
-		cout << "ID " << ID << endl;
+		AverageGrade = Average(grade1, grade2, grade3, grade4, grade5, grade6, lowestGrade);
+		cout << "average: " << AverageGrade << endl;
 	}
 
 	//Close the files
@@ -73,14 +99,14 @@ char *Token(char *line, int position, char *tokenReturnBuffer)
 	char *iterator = line;
 	int count = 0;
 	int letterCount = 0;
-	do {
-		if ((*iterator == delimiter) || (*iterator == delimiter2)) {
+	do 
+	{
+		if ((*iterator == delimiter) || (*iterator == delimiter2))
 			count++;
-		}
 
-		while ((*iterator == delimiter) || (*iterator == delimiter2)) {
+		while ((*iterator == delimiter) || (*iterator == delimiter2))
 			iterator++;
-		}
+		
 
 	} while ((*iterator++) && (count != position));
 	iterator--;
@@ -88,62 +114,58 @@ char *Token(char *line, int position, char *tokenReturnBuffer)
 	//Make new iterator. While not delimiter, iterator2 ++, once == to delimiter *iterator2 = '\0'
 	char *iterator2 = iterator;
 
-	while ((*iterator2 != delimiter) && (*iterator2 != delimiter2)) {
+	while ((*iterator2 != delimiter) && (*iterator2 != delimiter2)) 
+	{
 		tokenReturnBuffer[letterCount++] = *iterator2;
 		iterator2++;
 	}
 
 	tokenReturnBuffer[letterCount] = '\0';
-	cout << "returning token: " << tokenReturnBuffer << endl;
 	return tokenReturnBuffer;
 }
 
-/*
-void AssignInfo(char line[], char First[], char Last[], int ID, 
-		int grade1, int grade2, int grade3, int grade4, int grade5, int grade6, char * returningBuf)
+/**********************************************
+Function 2: If there are 6 grades, drop lowest.
+**********************************************/
+int FindLowest(int grade1, int grade2, int grade3,
+		int grade4, int grade5, int grade6)
 {
+	int lowest = grade1;
 
-	cout << "Name1: " << First << endl;
+	if(grade6)
+	{
+		if(grade2 < lowest)
+			lowest = grade2;
+		else if(grade3 < lowest)
+			lowest = grade3;
+		else if(grade4 < lowest)
+			lowest = grade4;
+		else if(grade5 < lowest)
+			lowest = grade5;
+		else if(grade6 < lowest)
+			lowest = grade6;
+	}
 
-	cout << "Last: " << Last << endl;
+	if(!grade6)
+		lowest = 0;
+	
+	return lowest;
 
-	cout << "Info: " << First << " " << Last << " " << ID << " " << grade1 << " " << grade2 << " " << grade3 << " " << grade4 << " " << grade5 << " " << grade6 << endl;
 }
-*/
 
-/*****************************************************
-Function One: Reads in the contents of one line
-*****************************************************/
-//void readLine(char line[], const int SIZE)
-//{
-//      fin.getline(line, SIZE);
-//      return;
-//}
-
-/*****************************************************
-Function Two: Parse the line into words/numbers
-*****************************************************/
-//void parseLine(char line[])
-//{
-//      const int NAME1 = 11;
-//      const int NAME2  = 12;
-//      char firstName[NAME1] = {'0','0','0','0','0','0','0','0','0','0','\0'};
-//      char lastName[NAME2];
-//      int i = 0;
-//      
-//      while(line[i] != '\0')
-//      {
-//              cout << "This is what is in line[i]: " << line[i] << endl;
-//              if(isalpha(line[i]))
-//              {
-//                      firstName[i] = line[i];
-//                      if(isspace(line[i++]))
-//                              break;
-//              }
-
-//              i++;
-
-//      }
-//      cout << "This is what's in first name array: " << firstName << endl;
-//      return;
-//}*/
+/*******************************************
+Function 3: Find average grade
+*******************************************/
+int Average(int grade1, int grade2, int grade3, int grade4
+		,int grade5, int grade6, int lowestGrade)
+{
+	int average = 0;
+	int total = 0;
+	total = grade1 + grade2 + grade3 + grade4 + grade5 + grade6;
+	
+	if(grade6 != 0)
+		average = total/6;
+	else
+		average = total/5;
+	return average;
+}
