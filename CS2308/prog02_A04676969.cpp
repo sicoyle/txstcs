@@ -15,7 +15,7 @@ using namespace std;
 
 //Prototypes
 char *Token(char *line, int position, char *tokenReturnBuffer);
-int FindLowest(int grade[]);
+int FindLowest(int grade[], const int NumGrades);
 double Average(int grade[], int lowestGrade, const int NumGrades);
 //int Errors(int grade[], const int NumGrades);
 char CalculateLetterGrade(double AverageGrade);
@@ -62,6 +62,10 @@ int main()
 		return -1;
 	}
 
+	fout << setw(35) << "Grade Report\n\n";
+	fout << left << setw(15) << "Last Name" << left << setw(15) << "First Name";
+	fout << left << setw(15) << "ID" << left << setw << "Average Score";
+	fout << left << setw(15) << "Grade" << endl;
 	//Read in data
 	while (fin.getline(line, SIZE)) 
 	{
@@ -80,11 +84,11 @@ int main()
 		grade[4] = atoi(Token(line, 7, returnBuffer));
 		grade[5] = atoi(Token(line, 8, returnBuffer));
 		
-		lowestGrade = FindLowest(grade);	
+		lowestGrade = FindLowest(grade, NumGrades);	
 		cout << "Lowest grade: " << lowestGrade << endl;
 
 		AverageGrade = Average(grade, lowestGrade, NumGrades);
-		cout << "average: " << AverageGrade << endl;
+		cout << "average: " << fixed << setprecision(1) << AverageGrade << endl;
 
 		if(grade[5] == 1000)
 			cout << "There are only 5 grades.\n";
@@ -93,13 +97,13 @@ int main()
 			if(grade[index] < 0)
 			{
 				cout << "Error: Negative grade.\n";
-				cout << "Terminating program.";
+				cout << "Terminating program.\n";
 				return -1;
 			}
 		}
 
 		letterGrade = CalculateLetterGrade(AverageGrade);		
-		OutputStudentData(grade, NumGrades, first, last, ID, AverageGrade, letterGrade);
+		OutputStudentData(grade, NumGrades, * first, * last, ID, AverageGrade, letterGrade);
 	}
 
 		OutputGradeTotals(letterGrade);
@@ -148,22 +152,19 @@ char *Token(char *line, int position, char *tokenReturnBuffer)
 /**********************************************
 Function 2: If there are 6 grades, drop lowest.
 **********************************************/
-int FindLowest(int grade[])
+int FindLowest(int grade[], const int NumGrades)
 {
 	int lowest = grade[0];
 
-		if(grade[1] < lowest)
-			lowest = grade[1];
-		else if(grade[2] < lowest)
-			lowest = grade[2];
-		else if(grade[3] < lowest)
-			lowest = grade[3];
-		else if(grade[4] < lowest)
-			lowest = grade[4];
-		else if(grade[5] < lowest)
-			lowest = grade[5];
-	
-	if(grade[5] = 1000)
+	if(grade[5] != 1000)
+	{
+		for(int index = 0; index < NumGrades; index++)
+		{
+			if(grade[index] < lowest)
+				lowest = grade[index];
+		}
+	}
+	if(grade[5] == 1000)
 		lowest = 0;
 	
 	return lowest;
@@ -182,11 +183,16 @@ double Average(int grade[], int lowestGrade, const int NumGrades)
 		total += grade[index];
 	
 	if (grade[5] != 1000)
-		average = (total-lowestGrade)/5;
-
+	{
+		total = total - lowestGrade;
+		average = total/5;
+	}
 	if(grade[5] == 1000)
-		average = (total - 1000)/5;
-
+	{
+		total = total - grade[5];
+		average = total/5;
+	
+	}
 	average = total /5;
 	return average;
 }
@@ -217,14 +223,9 @@ Function 5: Print all data to output file
 void OutputStudentData(int grade[], const int NumGrades, char * first,
 		char * last, int ID, double AverageGrade, char letterGrade)
 {
-	fout << setw(20) << "Grade Report/n/n";
-	fout << setw(5) << "Last Name" << setw(5) << "First Name";
-	fout << setw(5) << "ID" << setw(5) << "Average Score";
-	fout << setw(5) << "Grade" << endl;
-
-	fout << setw(5) << last << setw(5) << first;
-	fout << setw(5) << ID << setw(5) << setprecision(1) << AverageGrade;
-	fout << setw(5) << letterGrade << endl;
+	fout << left << setw(15) << last << left << setw(15) << first;
+	fout << left << setw(15) << ID << left << setw(15) << fixed << setprecision(1) << AverageGrade;
+	fout << left << setw(15) << letterGrade << endl;
 } 
 /***************************************************
 Function 6: Display grade letter totals)
