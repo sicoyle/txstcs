@@ -14,7 +14,7 @@ Instructor: Komogortsev, TSU
 using namespace std;
 
 //Prototypes
-char * Token(char * line, int position, char * tokenReturnBuffer);
+char *Token(char *line, int position, char *tokenReturnBuffer);
 
 //Create file objects
 ifstream fin;
@@ -26,27 +26,26 @@ int main()
 	const int SIZE = 256;
 	char line[SIZE];
 	int position = 0;
-	char First[11] = {'\0'};
-	char Last[13] = {'\0'};
+	char *first;
+	char *last;
 	int ID = 0;
-	int grade1 = 0, grade2 = 0, grade3 = 0, 
+	int grade1 = 0, grade2 = 0, grade3 = 0,
 	    grade4 = 0, grade5 = 0, grade6 = 0;
+	//char *firstName, lastName;
 
 	//Open the files
 	fin.open("student_input.dat");
 	fout.open("student_results.dat");
 
 	//Read in data
-	while(!fin.eof())
-	{	
-		char * returnBuffer = new char[256];
+	while (fin.getline(line, SIZE)) {
+		char *returnBuffer = new char[256];
 		//Read in the data
-		fin.getline(line, SIZE);
 		cout << "This is what I read in: " << line << endl;
-		 
-		First  = Token(line, 0, returnBuffer);
-		Last   = Token(line, 1, returnBuffer);
-		ID     = atoi(Token(line, 2, returnBuffer));
+
+		first = Token(line, 0, returnBuffer);
+		last = Token(line, 1, returnBuffer);
+		ID = atoi(Token(line, 2, returnBuffer));
 		grade1 = atoi(Token(line, 3, returnBuffer));
 		grade2 = atoi(Token(line, 4, returnBuffer));
 		grade3 = atoi(Token(line, 5, returnBuffer));
@@ -54,7 +53,7 @@ int main()
 		grade5 = atoi(Token(line, 7, returnBuffer));
 		grade6 = atoi(Token(line, 8, returnBuffer));
 
-		cout << "ID " << ID << endl;	
+		cout << "ID " << ID << endl;
 	}
 
 	//Close the files
@@ -62,52 +61,42 @@ int main()
 	fout.close();
 
 	return 0;
-	}
+}
 
 /***********************************************
 Function 1: Create tokenizer to split up string
 ***********************************************/
-char * Token(char * line, int position, char * tokenReturnBuffer)
+char *Token(char *line, int position, char *tokenReturnBuffer)
 {
 	char delimiter = ' ';
-	char delimiter2 = '\t';	
-	char * iterator = line;
+	char delimiter2 = '\t';
+	char *iterator = line;
 	int count = 0;
 	int letterCount = 0;
-	do
-	{
-		if(( * iterator == delimiter) || (* iterator == delimiter2))
-		{
+	do {
+		if ((*iterator == delimiter) || (*iterator == delimiter2)) {
 			count++;
 		}
 
-		while (( * iterator == delimiter) || ( * iterator == delimiter2))
-		{
+		while ((*iterator == delimiter) || (*iterator == delimiter2)) {
 			iterator++;
 		}
-			
-	} while((* iterator++) && (count != position));
-	iterator--;
-//we're pointing to the first char of the word we want.
-//Make new iterator. While not delimiter, iterator2 ++, once == to delimiter *iterator2 = '\0'
-	char * iterator2 = iterator;
 
-	while ((* iterator2 != delimiter) && (* iterator2 != delimiter2))
-	{
-		tokenReturnBuffer[letterCount++] = * iterator2;
+	} while ((*iterator++) && (count != position));
+	iterator--;
+	//we're pointing to the first char of the word we want.
+	//Make new iterator. While not delimiter, iterator2 ++, once == to delimiter *iterator2 = '\0'
+	char *iterator2 = iterator;
+
+	while ((*iterator2 != delimiter) && (*iterator2 != delimiter2)) {
+		tokenReturnBuffer[letterCount++] = *iterator2;
 		iterator2++;
 	}
 
 	tokenReturnBuffer[letterCount] = '\0';
-cout << "returning token: " << tokenReturnBuffer << endl;
-return tokenReturnBuffer;
+	cout << "returning token: " << tokenReturnBuffer << endl;
+	return tokenReturnBuffer;
 }
-
-
-
-
-
-
 
 /*
 void AssignInfo(char line[], char First[], char Last[], int ID, 
@@ -122,16 +111,13 @@ void AssignInfo(char line[], char First[], char Last[], int ID,
 }
 */
 
-
-
-
 /*****************************************************
 Function One: Reads in the contents of one line
 *****************************************************/
 //void readLine(char line[], const int SIZE)
 //{
-//	fin.getline(line, SIZE);
-//	return;
+//      fin.getline(line, SIZE);
+//      return;
 //}
 
 /*****************************************************
@@ -139,27 +125,25 @@ Function Two: Parse the line into words/numbers
 *****************************************************/
 //void parseLine(char line[])
 //{
-//	const int NAME1 = 11;
-//	const int NAME2  = 12;
-//	char firstName[NAME1] = {'0','0','0','0','0','0','0','0','0','0','\0'};
-//	char lastName[NAME2];
-//	int i = 0;
-//	
-//	while(line[i] != '\0')
-//	{
-//		cout << "This is what is in line[i]: " << line[i] << endl;
-//		if(isalpha(line[i]))
-//		{
-//			firstName[i] = line[i];
-//			if(isspace(line[i++]))
-//				break;
-//		}
-		
-			
-//		i++;
-		
-		
-//	}
-//	cout << "This is what's in first name array: " << firstName << endl;
-//	return;
+//      const int NAME1 = 11;
+//      const int NAME2  = 12;
+//      char firstName[NAME1] = {'0','0','0','0','0','0','0','0','0','0','\0'};
+//      char lastName[NAME2];
+//      int i = 0;
+//      
+//      while(line[i] != '\0')
+//      {
+//              cout << "This is what is in line[i]: " << line[i] << endl;
+//              if(isalpha(line[i]))
+//              {
+//                      firstName[i] = line[i];
+//                      if(isspace(line[i++]))
+//                              break;
+//              }
+
+//              i++;
+
+//      }
+//      cout << "This is what's in first name array: " << firstName << endl;
+//      return;
 //}*/
