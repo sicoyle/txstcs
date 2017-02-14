@@ -19,6 +19,8 @@ int FindLowest(int grade1, int grade2, int grade3,
 		int grade4, int grade5, int grade6);
 int Average(int grade1, int grade2, int grade3, int grade4,
 		int grade5, int grade6, int lowestGrade);
+int Errors(int grade1, int grade2, int grade3, int grade4,
+		int grade5, int grade6);
 //Create file objects
 ifstream fin;
 ofstream fout;
@@ -80,6 +82,9 @@ int main()
 
 		AverageGrade = Average(grade1, grade2, grade3, grade4, grade5, grade6, lowestGrade);
 		cout << "average: " << AverageGrade << endl;
+
+		Errors(grade1, grade2, grade3, grade4, grade5, grade6);
+
 	}
 
 	//Close the files
@@ -168,4 +173,35 @@ int Average(int grade1, int grade2, int grade3, int grade4
 	else
 		average = total/5;
 	return average;
+}
+
+/********************************************
+Function 4: Provide error message if:
+		1. There is a negative grade
+		2. There are less than 6 grades
+********************************************/
+int Error(int grade1, int grade2, int grade3, int grade4,
+		int grade5, int grade6)
+{
+	if(grade6 = 0)
+	{
+		cout << "Error: There are less than 6 grades.";
+		cout << "Terminating program." << endl;
+		return -1;
+	}
+
+	if(grade1 < 0)
+		cout << "Error: Negative grade/n";
+	if(grade2 < 0)
+		cout << "Error: Negative grade/n";
+	if(grade3 < 0)
+		cout << "Error: Negative grade/n";
+	if(grade4 < 0)
+		cout << "Error: Negative grade/n";
+	if(grade5 < 0)
+		cout << "Error: Negative grade/n";
+	if(grade6 < 0)
+		cout << "Error: Negative grade/n";
+
+	return 0;
 }
