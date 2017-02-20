@@ -25,14 +25,17 @@ int COLUMNS = 0;      //stores the number of rows in the grid
 //description of your implementation logic) 
 void populateWorld (const char * file)
 {
-/*	while(!eof())
+ifstream fin;
+fin.open("glider_gun_fight.txt");
+	while(!eof())
 	{
+		ROWS++;
 		while(fin.get(arr))
-			ROW++;
-		COLUMN++;
-		for(int r = 0; r < ROW; r++)
-			arr[r] = new int[COLUMN];
-	}*/
+		{	COLUMNS++;
+			for(int r = 0; r < ROW; r++)
+				arr[r] = new int[COLUMN];
+		}
+	}
 }
 
 //This function outputs the grid for current generation (add high level 
