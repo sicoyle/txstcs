@@ -11,7 +11,7 @@ Instructor: Komogortsev, TSU
 
 #include <iostream>
 #include <fstream>
-
+#include <cstdio>
 #include "life.h"
 
 using namespace std;
@@ -25,30 +25,36 @@ int COLUMNS = 0;      //stores the number of rows in the grid
 //description of your implementation logic) 
 void populateWorld (const char * file)
 {
-ifstream fin;
-fin.open("glider_gun_fight.txt");
-	while(!eof())
+	ifstream fin;
+	fin.open("glider_gun_fight.txt");
+	int** arr;
+	if(fin.fail())
 	{
-		ROWS++;
-		while(fin.get(arr))
-		{	COLUMNS++;
-			for(int r = 0; r < ROW; r++)
-				arr[r] = new int[COLUMN];
-		}
+		cout << "Error: input file did not open. ";
 	}
+		while(!fin.eof())
+		{
+			ROWS++;
+			while(fin)
+			{	COLUMNS++;
+				for(int r = 0; r < ROWS; r++)
+				{	arr[r] = new int[COLUMNS];
+					cout << **arr;
+				}
+			}
+		}
 }
-
 //This function outputs the grid for current generation (add high level 
 //description of your implementation logic) 
 void showWorld ()
 {
-
+	cout << "In showworld function\n";
 }
 
 //This function creats new geneneration grid from the old generation grid
 //(add high level description of your implementation logic)
 void iterateGeneration ()
 {
-
+	cout << "In iterategeneration function\n";
 }
 
