@@ -18,31 +18,45 @@ using namespace std;
 
 //GLOBAL VARIABLES
 
-int ROWS = 0;         //stores the number of rows in the grid
-int COLUMNS = 0;      //stores the number of rows in the grid
+int ROWS;         //stores the number of rows in the grid
+int COLUMNS;      //stores the number of rows in the grid
 
 //This function reads input file for subsequent prosessing (add high level 
 //description of your implementation logic) 
 void populateWorld (const char * file)
 {
-	ifstream fin;
+	//Initialize variables
+	ROWS = 0;
+	COLUMNS = 0;
+	ifstream fin; //Create file object
+	
+	//Open file
 	fin.open("glider_gun_fight.txt");
-	int ** arr = new int * [ROWS];
+
+	//Rest of variables
+	int ** arr;
+	//arr = new int * [ROWS];
+	//char ch = new int [COLUMNS];
+	char ch;
+	vector < vector<char> > gameBoard; //For reading in the gameboard info	
+
+	//Make sure file opens
 	if(fin.fail())
 		cout << "Error: input file did not open. ";
 		
-		while(!fin.eof())
-		{
-			ROWS++;
-			while(fin.get())
-			{
-				for(int r = 0; r < ROWS; r++)
-				{	arr[r] = new int [COLUMNS];
-					cout << **arr;
-				}
-				COLUMNS++;
-			}
+	//Read in input for each row of data
+	while(fin.get(ch))
+	{
+		if(atoi(ch) == 0 || atoi(ch) == 1)
+			gameBoard[ROWS];
+
+		if(ch == '\n')
+//This line needs fixing			gameBoard.push_back(vector <char>);
 		}
+		gameBoard.push_back(temp);
+		ROWS++;
+	}
+		COLUMNS++;
 }
 //This function outputs the grid for current generation (add high level 
 //description of your implementation logic) 
