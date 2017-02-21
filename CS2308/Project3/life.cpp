@@ -27,20 +27,20 @@ void populateWorld (const char * file)
 {
 	ifstream fin;
 	fin.open("glider_gun_fight.txt");
-	int** arr;
+	int ** arr = new int * [ROWS];
 	if(fin.fail())
-	{
 		cout << "Error: input file did not open. ";
-	}
+		
 		while(!fin.eof())
 		{
 			ROWS++;
-			while(fin)
-			{	COLUMNS++;
+			while(fin.get())
+			{
 				for(int r = 0; r < ROWS; r++)
-				{	arr[r] = new int[COLUMNS];
+				{	arr[r] = new int [COLUMNS];
 					cout << **arr;
 				}
+				COLUMNS++;
 			}
 		}
 }
