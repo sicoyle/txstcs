@@ -2,6 +2,7 @@
 Name: Samantha Coyle
 Date: 2/28/2017
 Problem Number: 3
+Hours spent solving problem: 3
 CS2308
 Instructor: Komogortsev, TSU
 *****************************************************/
@@ -43,7 +44,7 @@ int main()
         if (WINDOWS)
         	system("cmd.exe /c cls"); //Windows only
         else
-           system("clear"); //Linux only
+//           system("clear"); //Linux only
         iterateGeneration();
         showWorld();
     }

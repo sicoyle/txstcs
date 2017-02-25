@@ -2,6 +2,7 @@
 Name: Samantha Coyle
 Date: 2/28/2017
 Problem Number: 3
+Hours spent solving problem: 3
 CS2308
 Instructor: Komogortsev, TSU
 *****************************************************/
@@ -14,7 +15,7 @@ Instructor: Komogortsev, TSU
 
 #include <iostream>
 #include <fstream>
-
+#include <cstdlib>
 using namespace std;
 
 void populateWorld(const char * file);
