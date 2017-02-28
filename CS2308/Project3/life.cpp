@@ -166,14 +166,14 @@ void showWorld ()
 
 void removeExcess(int ** nextGen)
 {
-	for(int r = 0; r < (ROWS + 2); r++)
+	for(int r = 1; r < (ROWS + 1); r++)
 	{
-		for(int c = 0; c < (COLUMNS + 2); c++)
+		for(int c = 1; c < (COLUMNS + 1); c++)
 		{
-			if(*(nextGen + r) == 0)
-			{//cout << "Here " << *(nextGen + r) << endl;
-			
-			}
+		//	if(*(nextGen + c) == 0)
+		//	{
+		//		delete[] nextGen[r];
+		//	}
 
 		}
 	}
