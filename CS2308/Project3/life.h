@@ -1,8 +1,8 @@
 /****************************************************
 Name: Samantha Coyle
-Date: 2/28/2017
+Date: 3/1/2017
 Problem Number: 3
-Hours spent solving problem: 3
+Hours spent solving problem: 20
 CS2308
 Instructor: Komogortsev, TSU
 *****************************************************/
