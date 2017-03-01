@@ -22,9 +22,7 @@ int COLUMNS;      //stores the number of rows in the grid
 char ** world;	  //store values of world
 int ** NC;	  //store value of neighbor counts for world
 
-//This function reads input file for subsequent prosessing (add high level 
-//description of your implementation logic) 
-
+//This function reads input file for subsequent prosessing
 void getGrid(const char * file)
 {
 	ifstream fin;
@@ -52,6 +50,7 @@ void getGrid(const char * file)
 	fin.close();
 }
 
+//Get the count per organism of neighbors
 int Count(int ro, int co)
 {
 	//initialize neighbor count
@@ -93,6 +92,7 @@ int Count(int ro, int co)
 	return count;
 }
 
+//Get neighbor count filled with data
 void countNeighbors()
 {
 	cout << "NC" << endl;
@@ -112,6 +112,7 @@ void countNeighbors()
 	
 }
 
+//Populate the world with data on live/dead cells
 void populateWorld (const char * file)
 {
 	//Initialize variables
@@ -186,12 +187,11 @@ void showWorld ()
 }
 
 //This function creats new geneneration grid from the old generation grid
-//(add high level description of your implementation logic)
 void iterateGeneration ()
 {
 	//Count neighbors
 	countNeighbors();
-
+	
 	//Create and allocate memory for next generation
 	char ** nextGen;
 	nextGen = new char * [ROWS + 2];
@@ -203,30 +203,36 @@ void iterateGeneration ()
 		for(int col = 0; col < COLUMNS + 2; col++)
 			*(* (nextGen + row) + col) = 48;
 
-	//For every organism, check if next generation organism becomes alive/dead
+	//Check if next generation organism becomes alive/dead
 	for(int row = 1; row < ROWS + 1; row++)
 	{
 		for(int col = 1; col < COLUMNS + 1; col++)
 		{
 			//Rule one: alive if world was dead with NC is 3
-			if( (*(* (world + row) + col) == 48) && (*(* (NC + row) + col) == 3))
+			if( (*(* (world + row) + col) == 48) && 
+					(*(* (NC + row) + col) == 3))
 				*(* (nextGen + row) + col) = 49;
 
 			//Rule two: dead if NC is 4 or more
-			if( (*(* (world + row) + col) == 49) && (*(* (NC + row) + col) >= 4))
+			if( (*(* (world + row) + col) == 49) && 
+					(*(* (NC + row) + col) >= 4))
 				*(* (nextGen + row) + col) = 48;
 	
 			//Rule three: dead if NC is one or fewer
-			if( (*(* (world + row) + col) == 49) && (*(* (NC + row) + col) < 2))
+			if( (*(* (world + row) + col) == 49) && 
+					(*(* (NC + row) + col) < 2))
 				*(* (nextGen + row) + col) = 48;
 
 			//Rule four: alive if NC is 2 or more
-			if( (*(* (NC + row) + col) == 2) || (*(* (NC + row) + col) == 3))
+			if( (*(* (world + row) + col) == 49) &&	
+					(*(* (NC + row) + col) == 2) || 
+					(*(* (NC + row) + col) == 3))
 				*(* (nextGen + row) + col) = 49;
 		
 		}
 	}
 
+	//Output next generation world
 	cout << "Next Generation" << endl;
 	for(int row = 1; row < ROWS + 1; row++)
 	{
@@ -237,8 +243,8 @@ void iterateGeneration ()
 		cout << endl;
 	}
 	
-	
-
-
+	//Clear memory for next iteration
+	delete world;
+	world = nextGen;
 }		
 
