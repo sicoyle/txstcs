@@ -2,7 +2,7 @@
 Name: Samantha Coyle
 Date: 2/28/2017
 Problem Number: 3
-Hours spent solving problem: 9 
+Hours spent solving problem: 17 
 CS2308
 Instructor: Komogortsev, TSU
 *****************************************************/
@@ -51,6 +51,7 @@ void gridSize(const char * file)
 
 int Count(int j, int k)
 {
+cout << "SEARCHING FOR NEIGHBORS FOR COORD [" << j << ", " << k << "]:" << endl;
 	//Declare variables
 	int counter = 0;
 	
@@ -60,13 +61,15 @@ int Count(int j, int k)
 		for(int n = k - 1; n <= k + 1; n++)
 		{
 			//Incremement count if cell is alive
-			if( *(* (arr + m) + n) == 49)
+			if( *(* (arr + m) + n) == 49){
 				counter += 1;
+				cout << "\tneighbor found! [" << n << ", " << m << "]" << endl;
+				}
 		}
 	}
 		//Subtract value of cell from NC
-		if( *(* (arr + j) + k) == 49)
-			counter = counter - 1;
+//		if( *(* (arr + j) + k) == 49)
+//			counter = counter - 1;
 	
 	//Return neighbor count
 	return counter;
@@ -76,9 +79,9 @@ void countNeighbors()
 {
 	cout << "NC:" << endl;
 	//Assign number of neighbors to NC
-	for(int j = 1; j < (ROWS + 1); j++)
+	for(int j = 1; j < (ROWS+1); j++)
 	{
-		for(int k = 1; k < (COLUMNS + 1); k++)
+		for(int k = 1; k < (COLUMNS+1); k++)
 		{
 			//Get actual neighbor count
 			*(* (NC + j) + k) = Count(j, k); 
@@ -105,20 +108,20 @@ void populateWorld (const char * file)
 
 	//Rest of variables
 	char ch;
-	arr = new char * [ROWS + 2]; 
+	arr = new char * [ROWS+2]; 
 
 	//Make sure file opens
 	if(fin.fail())
 		cout << "Error: input file did not open. ";
 
 	//Allocate memory for world grid
-	for(int r = 0; r < (ROWS + 2); r++)
-		arr[r] = new char [COLUMNS + 2];
+	for(int r = 0; r < (ROWS+2); r++)
+		arr[r] = new char [COLUMNS+2];
 
 	//Initialize all values of world grid to 0
-	for(int R = 0; R < (ROWS + 2); R++)
-		for(int C = 0; C < (COLUMNS + 2); C++)
-			*(* (arr + R) + C) = 0;
+	for(int R = 0; R < (ROWS+2); R++)
+		for(int C = 0; C < (COLUMNS+2); C++)
+			*(* (arr + R) + C) = 48;
 
 	//Allocate memory for neighbor count
 	NC = new int * [ROWS + 2];	
@@ -131,9 +134,9 @@ void populateWorld (const char * file)
 			*(* (NC + u) + v) = 0;
 
 	//Read in the world grid values
-	for(int row = 1; row < (ROWS + 1); row++)
+	for(int row = 0; row < (ROWS); row++)
 	{
-		for(int columns = 1; columns < (COLUMNS + 1); columns++)
+		for(int columns = 0; columns < (COLUMNS); columns++)
 		{
 			fin.get(ch); //Read in characters
 
@@ -143,7 +146,7 @@ void populateWorld (const char * file)
 		}
 		fin.ignore();
 	}
-	
+	countNeighbors();
 	fin.close(); //Close the files
 }
 
@@ -153,44 +156,60 @@ void showWorld ()
 {
 	cout << "Original world: " << endl;
 	//Print out the world to console
-	for(int a = 1; a < (ROWS + 2); a++)
+	for(int a = 0; a < (ROWS); a++)
 	{ 
-		for(int b = 1; b < (COLUMNS + 2); b++)
+		for(int b = 0; b < (COLUMNS); b++)
 		{			
 			cout << *(* (arr + a) + b);
 		}
 		cout << endl;
 	}
-	countNeighbors();
 }
 
-void removeExcess(int ** nextGen)
+char * getRow(int r, char ** world)
 {
-	for(int r = 1; r < (ROWS + 1); r++)
-	{
-		for(int c = 1; c < (COLUMNS + 1); c++)
-		{
-		//	if(*(nextGen + c) == 0)
-		//	{
-		//		delete[] nextGen[r];
-		//	}
+	return * (world + r);
+}
 
-		}
+void removeRow(int r, char ** world)
+{
+	delete getRow(r, world);
+//	ROWS--;
+	if(r == 0)
+		world++;
+}
+
+int rowIsZero(int rowNum, char ** world)
+{
+	char * ptr = getRow(rowNum, world);
+	for(int index = 0; index < COLUMNS; index++)
+	{
+		if( *(ptr + index) == 49)
+			return 1;
+	}
+	return 0;
+}
+
+void Borders(char** world)
+{
+	if(rowIsZero(0, world))
+	{	
+		removeRow(0, world);
 	}
 }
 
 //This function creats new geneneration grid from the old generation grid
 //(add high level description of your implementation logic)
-void outputNextGen(int ** nextGen)
+void outputNextGen(char ** world)
 {
-	removeExcess(nextGen);
+	Borders(world);
 
-	cout << "Here is next generation:" << endl;
-	for(int d = 0; d < (ROWS + 2); d++)
+	cout << "Here is next generation: at addr" << world << endl;
+	for(int d = 0; d < (ROWS); d++)
 	{
-		for(int e = 0; e < (COLUMNS + 2); e++)
+		for(int e = 0; e < (COLUMNS); e++)
 		{
-			cout << *(* (nextGen + d) + e);
+//			cout << *(* (nextGen + d) + e);
 		}
 		cout << endl;
 	}
@@ -198,43 +217,53 @@ void outputNextGen(int ** nextGen)
 
 void iterateGeneration ()
 {
+
+	countNeighbors();
+
 	//Create and allocate memory for next generation
-	int ** nextGen;
-	nextGen = new int * [ROWS + 2];
-	for(int x = 0; x < (ROWS + 2); x++)
-		nextGen[x] = new int [COLUMNS + 2];
+	char ** nextGen = new char * [ROWS];
+	for(int x = 0; x < (ROWS); x++)
+		nextGen[x] = new char [COLUMNS];
+//allocate
+	for(int y = 0; y < (ROWS); y++)
+		for(int z = 0; z < (COLUMNS); z++)
+			*(* (nextGen + y) + z) = 48;
 
+
+cout << "ded" << endl;
 	//Initialize next generation to zero
-	for(int y = 0; y < (ROWS + 2); y++)
-		for(int z = 0; z < (COLUMNS + 2); z++)
-			*(* (nextGen + y) + z) = 0;
-
-	for(int ro = 1; ro < (ROWS + 1); ro++)
+cout << "ded?" << endl;
+	for(int ro = 0; ro < (ROWS); ro++)
 	{
-		for(int co = 1; co < (COLUMNS + 1); co++)
+		for(int co = 0; co < (COLUMNS); co++)
 		{
 			//Rule One:
 			//Alive if arr was dead with NC is 3
 			if(*(* (arr + ro) + co) == 48 && *(* (NC + ro) + co) == 3)
-				*(* (nextGen + ro) + co) = 1;
+				*(* (nextGen + ro) + co) = 49;
 			
 			//Rule Two:
 			//Dead if NC is 4 or more
 			if(*(* (arr + ro) + co) == 49 && *(* (NC + ro) + co) >= 4)
-				*(* (nextGen + ro) + co) = 0;
+				*(* (nextGen + ro) + co) = 48;
 			
 			//Rule Three:
 			//Dead if NC is one or fewer
 			if(*(* (arr + ro) + co) == 49 && *(* (NC + ro) + co) < 2)
-				*(* (nextGen + ro) + co) = 0;
+				*(* (nextGen + ro) + co) = 48;
 			
 			//Rule Four:
 			//Alive if NC is 2 or more
-			if((*(* (arr + ro) + co) == 49) && (*(* (NC + ro) + co) == 2 ||
+			if((*(* (NC + ro) + co) == 2 ||
 			    *(* (NC + ro) + co) == 3))
-				*(* (nextGen + ro) + co) = 1;
+				*(* (nextGen + ro) + co) = 49;
 		}
 	}
-	outputNextGen(nextGen);	
+	//outputNextGen(nextGen);	
+for(int i = 0; i < ROWS; i++)
+removeRow(i, arr);
+delete arr;
+
+arr = nextGen;
 }
 
