@@ -223,10 +223,22 @@ void iterateGeneration ()
 			//Rule four: alive if NC is 2 or more
 			if( (*(* (NC + row) + col) == 2) || (*(* (NC + row) + col) == 3))
 				*(* (nextGen + row) + col) = 49;
-
-
 		
 		}
-	}	
+	}
+
+	cout << "Next Generation" << endl;
+	for(int row = 1; row < ROWS + 1; row++)
+	{
+		for(int col = 1; col < COLUMNS + 1; col++)
+		{
+			cout << *(* (nextGen + row) + col);
+		}
+		cout << endl;
+	}
+	
+	
+
+
 }		
 
