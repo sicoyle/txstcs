@@ -1,13 +1,14 @@
 /****************************************************
 Name: Samantha Coyle
-Date: 2/28/2017
+Date: 3/1/2017
 Problem Number: 3
-Hours spent solving problem: 17
 CS2308
+Hours worked on project: 20
 Instructor: Komogortsev, TSU
 *****************************************************/
 
 // This is driver's code
+
 
 #ifdef linux
 #define LINUX true
@@ -44,7 +45,7 @@ int main()
         if (WINDOWS)
         	system("cmd.exe /c cls"); //Windows only
         else
-           //system("clear"); //Linux only
+//           system("clear"); //Linux only
         iterateGeneration();
         showWorld();
     }
