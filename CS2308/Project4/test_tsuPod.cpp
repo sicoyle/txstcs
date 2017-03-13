@@ -2,7 +2,7 @@
 Name: Samantha Coyle
 Date: 3/12/2017
 Problem Number: 4
-Hours spent solving the problem: 
+Hours spent solving the problem: 4
 Instructor: Komogortsev, TSU
 *****************************************************/
 #include <iostream>
@@ -16,38 +16,80 @@ int main()
 {
     // Following code initializes the tsuPod 
     initTsuPod();
+
+    cout << "Here is initialized playlist" << endl;
     
     // Following code lists all songs located in tsuPod memeory 
     showSongList(/*add nessesary parameters here*/);
     cout << endl;
 
-    // Following code tests tsuPod input functionality 
-    int retCode = addSong("Runaway1", "Bon Jovi1", 1);
-    retCode = addSong(/*add nessesary parameters here*/ "Runaway2", "Bon Jovi2", 2);
-    retCode = addSong(/*add nessesary parameters here*/ "Runaway3", "Bon Jovi3", 3);
-    retCode = addSong(/*add nessesary parameters here*/ "Runaway4", "Bon Jovi4", 1);
-    retCode = addSong(/*add nessesary parameters here*/ "Runaway5", "Bon Jovi5", 5);
-    retCode = addSong(/*add nessesary parameters here*/ "Runaway6", "Bon Jovi6", 6);
-    retCode = addSong(/*add nessesary parameters here*/ "Runaway7", "Bon Jovi7", 1);
-    retCode = addSong(/*add nessesary parameters here*/ "Runaway8", "Bon Jovi8", 1);
-    retCode = addSong(/*add nessesary parameters here*/ "Runaway8", "Bon Jovi8", 1);
-    retCode = addSong(/*add nessesary parameters here*/ "Runaway8", "Bon Jovi8", 1);
-    retCode = addSong(/*add nessesary parameters here*/ "Runaway8", "Bon Jovi8", 1);
-    cout << retCode << endl;   
+    // Following code tests tsuPod input functionality
+    // Correctly adds a song to playlist 
+    int retCode = addSong("Issues", "Julia Michaels", 1);
+	cout << "Successfully added song: " << retCode << endl;
+
+    //Adds song to playlist
+    retCode = addSong("Shape of You", "Ed Sheeran", 2);
+    	cout << "Successfully added song: " << retCode << endl;
+
+    //Adds song to playlist
+    retCode = addSong("Mercy", "Shawn Mendez", 3);
+	cout << "Successfully added song: " << retCode << endl;
+
+    //Adds song to playlist
+    retCode = addSong("Blue Ain't Your Color", "Keith Urban", 1);
+	cout << "Successfully added song: " << retCode << endl;
+    
+    //Adds song to playlist
+    retCode = addSong("Paris", "Chainsmokers", 5);
+	cout << "Successfully added song: " << retCode << endl;
+
+    //Adds song to playl;ist
+    retCode = addSong("Mattress", "Front Bottoms", 6);
+	cout << "Successfully added song: " << retCode << endl;
+
+    //Unsuccessful song addition - lack of memory
+    retCode = addSong("Earned it", "The Weeknd", 22);
+	cout << "Unsuccessful song addition - lack of memory: " << retCode << endl;
+
+    //Adds song to playlist
+    retCode = addSong("Dream On", "Aerosmith", 1);
+    	cout << "Successfully added song: " << retCode << endl;
+
+    //Adds song to playlist
+    retCode = addSong("Carline", "Amine", 1);
+	cout << "Successfully added song: " << retCode << endl;
+ 
+    //Unsuccessful song addition -  no empty slots
+    retCode = addSong("Irresistible", "Fall Out Boys", 1);
+	cout << "Unsuccessful song addition - no empty slots: " << retCode << endl;
+
+    cout << endl << "Playlist with songs added" << endl;
     showSongList();
     cout << endl;
 
     // Following code tests tsuPod song removal functionality         
-    retCode = removeSong("Runaway100");
-    cout << retCode << endl;    
+    //Successfully remove song
+    retCode = removeSong("Dream On");
+    cout << "Successfully remove song: " << retCode << endl;
+
+    //Unsuccessfully remove song
+    retCode = removeSong("Wrecking Ball");
+    cout << "Unsuccessfully removed song - song not found: " << retCode << endl;
+    
+    cout << endl;
+    cout << "Playlist with song removed" << endl;
     showSongList();
     cout << endl;
 
     // Following code tests tsuPod song shuffling functionality      
     shuffle();
     cout << endl;
+
+    cout << "Final Playlist" << endl;
     showSongList();
     cout << endl;
     
-    //system("PAUSE");    
+    //system("PAUSE");   
+ 
 }
