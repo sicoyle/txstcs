@@ -2,7 +2,7 @@
 Name: Samantha Coyle
 Date: 3/12/2017
 Problem Number: 4
-Hours spent solving the problem: 4
+Hours spent solving the problem: 6
 Instructor: Komogortsev, TSU
 *****************************************************/
 /*This header file provides the prototypes of the function definitions
@@ -13,7 +13,6 @@ You have to create file tsuPod.cpp with function definitions for the test progra
 *********************************/
 #ifndef tsuPod_h
 #define tsuPod_h
-
 #include <string>
 
 using namespace std;
@@ -80,6 +79,6 @@ input parms - None
 output parms - None
 */
 
-void shuffle (/*add nessesary parameters here*/);
+void shuffle ();
 
 #endif

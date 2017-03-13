@@ -1,8 +1,8 @@
 /****************************************************
 Name: Samantha Coyle
 Date: 3/12/2017
-Problem Number: 5
-Hours spent solving the problem: 4
+Problem Number: 4
+Hours spent solving the problem: 6
 Instructor: Komogortsev, TSU
 *****************************************************/
 #include <iostream>
@@ -10,6 +10,8 @@ Instructor: Komogortsev, TSU
 #include "tsuPod.h"
 #include <string>
 #include <iomanip>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 //Global variables
@@ -66,15 +68,16 @@ int addSong(string newTitle, string newArtist, int size)
 			return 0;
 		}
 	}
-	
+	//Error if i is greater or equal to 8	
 	if(i >= 8)
 		return -2;		
 
 }
 
-//Remove song
+//Remove song from playlist
 int removeSong(string title)
 {
+	//Find matching index and mark as empty
 	for(int i = 0; i < NUM_SONGS; i++)
 	{
 		if(tsuPod[i].title == title)
@@ -86,12 +89,14 @@ int removeSong(string title)
 		}
 
 	}
+	//If song not found, return -1
 	return -1;
 }
 
 //Clear memory
 void clearMemory()
 {
+	//Clear all slots in playlist
 	for(int i = 0; i < NUM_SONGS; i++)
 	{
 		tsuPod[i].title = " ";
@@ -120,7 +125,17 @@ void showSongList()
 //Shuffle the songs
 void shuffle()
 {
+	TsuPod temp;
+	int randomIndex = 0;
+	srand(time(0));
+	for(int i = 0; i < NUM_SONGS; i++)
+	{
+		randomIndex = rand() % NUM_SONGS;
+		temp = tsuPod[i];
+		tsuPod[i] = tsuPod[randomIndex];
+		tsuPod[randomIndex] = temp;
 
+	}
 
 }
 

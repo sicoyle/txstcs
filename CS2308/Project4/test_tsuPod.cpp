@@ -2,12 +2,11 @@
 Name: Samantha Coyle
 Date: 3/12/2017
 Problem Number: 4
-Hours spent solving the problem: 4
+Hours spent solving the problem: 6
 Instructor: Komogortsev, TSU
 *****************************************************/
 #include <iostream>
 #include <fstream>
-
 #include "tsuPod.h"
 
 using namespace std;
@@ -20,7 +19,7 @@ int main()
     cout << "Here is initialized playlist" << endl;
     
     // Following code lists all songs located in tsuPod memeory 
-    showSongList(/*add nessesary parameters here*/);
+    showSongList();
     cout << endl;
 
     // Following code tests tsuPod input functionality
@@ -57,7 +56,7 @@ int main()
     	cout << "Successfully added song: " << retCode << endl;
 
     //Adds song to playlist
-    retCode = addSong("Carline", "Amine", 1);
+    retCode = addSong("Caroline", "Amine", 1);
 	cout << "Successfully added song: " << retCode << endl;
  
     //Unsuccessful song addition -  no empty slots
@@ -77,6 +76,7 @@ int main()
     retCode = removeSong("Wrecking Ball");
     cout << "Unsuccessfully removed song - song not found: " << retCode << endl;
     
+    //Show playlist minus the removed song
     cout << endl;
     cout << "Playlist with song removed" << endl;
     showSongList();
@@ -84,11 +84,14 @@ int main()
 
     // Following code tests tsuPod song shuffling functionality      
     shuffle();
-    cout << endl;
-
-    cout << "Final Playlist" << endl;
+    cout << "Shuffled playlist" << endl;
     showSongList();
     cout << endl;
+
+    //Show a cleared playlist
+    clearMemory();
+    cout << endl << "Cleared Playlist" << endl;
+    showSongList();
     
     //system("PAUSE");   
  
