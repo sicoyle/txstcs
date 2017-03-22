@@ -34,8 +34,8 @@ void initTsuPod()
 	//Initialize
 	for(int i = 0; i < NUM_SONGS; i++)
 	{
-		tsuPod[i].title = " ";
-		tsuPod[i].artist = " ";
+		tsuPod[i].title = "EMPTY";
+		tsuPod[i].artist = "EMPTY";
 		tsuPod[i].size = 0;		
 	}
 }
@@ -52,6 +52,10 @@ int addSong(string newTitle, string newArtist, int size)
 		total += tsuPod[index].size;
 	memoryLeft = MEMORY_SIZE - total;
 
+	//Do not add song with less than 0 size
+	if(size < 0)
+		return -1;
+	
 	//If you don't have enough memory, return -1
 	if(size > memoryLeft)
 		return -1;
@@ -68,12 +72,12 @@ int addSong(string newTitle, string newArtist, int size)
 			return 0;
 		}
 	}
+
 	//Error if i is greater or equal to 8	
 	if(i >= 8)
 		return -2;		
-
+	
 }
-
 //Remove song from playlist
 int removeSong(string title)
 {
@@ -99,8 +103,8 @@ void clearMemory()
 	//Clear all slots in playlist
 	for(int i = 0; i < NUM_SONGS; i++)
 	{
-		tsuPod[i].title = " ";
-		tsuPod[i].artist = " ";
+		tsuPod[i].title = "EMPTY";
+		tsuPod[i].artist = " EMPTY";
 		tsuPod[i].size = 0;
 	}
 
@@ -120,6 +124,20 @@ void showSongList()
 		cout << left << setw(20) << tsuPod[i].artist;
 		cout << left << setw(15) << tsuPod[i].size << endl;
 	}
+
+	//Give error if incorrect size, or no artist/title listed
+	for(int index = 0; index < NUM_SONGS; index++)
+	{
+		if(tsuPod[index].size == 0)
+			cout << "Error: incorrect size" << endl;
+
+		if(tsuPod[index].title == "EMPTY")
+			cout << "Error: title cannot be blank" << endl;
+
+		if(tsuPod[index].artist == "EMPTY")
+			cout << "Error: artist cannot be blank" << endl;
+	}
+
 }
 
 //Shuffle the songs

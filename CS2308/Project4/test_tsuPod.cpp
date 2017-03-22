@@ -63,6 +63,11 @@ int main()
     retCode = addSong("Irresistible", "Fall Out Boys", 1);
 	cout << "Unsuccessful song addition - no empty slots: " << retCode << endl;
 
+
+    //Unsuccessful song addition - size is less than zero
+    retCode = addSong("Formation", "Beyonce", 0);
+	cout << "Unsuccessful song addition - size is less than zero: " << retCode << endl;
+
     cout << endl << "Playlist with songs added" << endl;
     showSongList();
     cout << endl;
@@ -70,11 +75,11 @@ int main()
     // Following code tests tsuPod song removal functionality         
     //Successfully remove song
     retCode = removeSong("Dream On");
-    cout << "Successfully remove song: " << retCode << endl;
+    	cout << "Successfully remove song: " << retCode << endl;
 
     //Unsuccessfully remove song
     retCode = removeSong("Wrecking Ball");
-    cout << "Unsuccessfully removed song - song not found: " << retCode << endl;
+    	cout << "Unsuccessfully removed song - song not found: " << retCode << endl;
     
     //Show playlist minus the removed song
     cout << endl;
@@ -91,8 +96,6 @@ int main()
     //Show a cleared playlist
     clearMemory();
     cout << endl << "Cleared Playlist" << endl;
-    showSongList();
-    
-    //system("PAUSE");   
+    showSongList();   
  
 }
