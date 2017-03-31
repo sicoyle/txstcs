@@ -13,6 +13,8 @@ using namespace std;
 
 int main()
 {
+	TsuPod myPod(100,25);
+	myPod.addSong(Song("Title", "Artist", 1));	
 
-
+	return 0;	
 }

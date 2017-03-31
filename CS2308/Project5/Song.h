@@ -27,7 +27,7 @@ class Song
 
 	//Mutators
 	void setTitle(string t) {title = t;}
-	void setArist(string a) {artist = a;}
+	void setArtist(string a) {artist = a;}
 	void setSize(int s) {size = s;}
 
 	//Overload
@@ -36,21 +36,21 @@ class Song
 	//Constructors
 	Song();
 	Song(string title, string artist, int size);
-/*
-//Constructors
-Song::Song()
-{
-	setTitle("EMPTY");
-	setArtist("EMPTY");
-	setSize(0);
-};
 
-Song::Song(string ti, string ar, int si)
-{
-	setTitle(ti);
-	setArtist(ar);
-	setSize(si);
-};
-*/
+	//Constructors
+//	Song();
+	//{
+		//setTitle("EMPTY");
+		//setArtist("EMPTY");
+	//	setSize(0);
+	//};
+
+	//Song(string title, string artist, int size);
+	//{
+	//	setTitle(t);
+	//	setArtist(a);
+	//	setSize(s);
+	//};
+
 };
 #endif

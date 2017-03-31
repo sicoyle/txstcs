@@ -14,21 +14,20 @@ using namespace std;
 class TsuPod
 {
 	private:
-	int maxMem, songCounter, memLeft;
+	int memory, maxMem, songs, songCounter, memLeft;
 
 	public:
 	//Constructor
-	TsuPod();
+	TsuPod(int mem, int songCount);
 
 	//Functions
-
-	int addSong(Song);
-	int removeSong(Song);
+	//void OriginalBinaryFile(const char * file);
+	int addSong(Song s);
+	int removeSong(Song s);
 	int clearList();
 	int sortList();
 	void showList();
-	void showTotalMem();
-	void showRemaining();
+	void getTotalMem();
 	int shuffle();
 	int getRemainingMem();
 };
