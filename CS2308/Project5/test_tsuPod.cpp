@@ -1,4 +1,4 @@
-/****************************************************
+/*****************************************************
 Name: Samantha Coyle
 Date: 3/23/2017
 Problem Number: 5
@@ -15,16 +15,23 @@ int main()
 {
 	//return code variable
 	int retCode = 0;
-
+	int memTotal = 0;
+	int songTotal = 0;
 	//Create object
-	TsuPod myPod(100,25);
+	TsuPod myPod(10, 1);
 	
 
-	retCode = myPod.initialize();
-		cout << "Initialized: " << retCode << endl;
+//	retCode = myPod.initialize();
+//		cout << "Initialized: " << retCode << endl;
+//	myPod.showList();
+
+
 	//Add 25 Songs
-	myPod.addSong(Song("Title", "Artist", 1));	
-	myPod.addSong(Song("Shape of you", "Ed Sheeran", 2));
+	myPod.addSong("Title", "Artist", 2, 0, memTotal, songTotal);	
+
+	myPod.showList();
+
+//	myPod.addSong(Song("Shape of you", "Ed Sheeran", 2));
 /*	myPod.addSong(Song("Castle on the Hill", "Ed Sheeran", 3));
 	myPod.addSong(Song("Paris", "Chain Smokers", 2));
 	myPod.addSong(Song("Issues", "Julia Michaels", 1));
@@ -49,16 +56,6 @@ int main()
 	myPod.addSong(Song("Twin Size Mattress", "The Front Bottoms", 7));
 	myPod.addSong(Song("Swimming Pool", "The Front Bottoms", 4));
 	myPod.addSong(Song("Au Revoir", "The Front Bottoms", 8));
-
 */
-
-	
-
-
-
-
-
-
-
 	return 0;	
 }

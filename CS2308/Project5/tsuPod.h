@@ -22,7 +22,7 @@ class TsuPod
 	
 	//Functions
 	int initialize();	
-	int addSong(Song s);
+	int addSong(string T, string A, int S, int songNum, int &songTotal, int &memTotal);
 	int removeSong(Song s);
 	int clearList();
 	int sortList();
