@@ -21,7 +21,7 @@ class TsuPod
 	TsuPod(int mem, int songCount);
 	
 	//Functions
-	
+	int initialize();	
 	int addSong(Song s);
 	int removeSong(Song s);
 	int clearList();

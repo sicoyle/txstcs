@@ -20,6 +20,7 @@ using namespace std;
 
 fstream myio;
 
+//Constructor with parameters
 TsuPod::TsuPod(int mem, int songCount)
 {
 	cout << "NEW TSUPOD: " << endl;
@@ -36,8 +37,23 @@ void OriginalSongs(ifstream file)
 
 int TsuPod::initialize()
 {
+	//Create object
+	Song s;
+
+	//Open file in binary mode
 	myio.open("tsupod_memory.dat", ios::binary | ios::out | ios::in | ios::app);
 
+	//Check that file opens
+	if(myio.fail())
+	{
+		cout << "Error: file did not open." << endl;
+		return -1;
+	}
+
+	for(int i = 0; i < songs; i++)
+		cout << "HELLO" << endl;
+	
+	return 0;
 }	
 
 //Add desired song to playlist

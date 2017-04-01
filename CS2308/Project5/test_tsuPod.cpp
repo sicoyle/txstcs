@@ -13,9 +13,15 @@ using namespace std;
 
 int main()
 {
+	//return code variable
+	int retCode = 0;
+
 	//Create object
 	TsuPod myPod(100,25);
 	
+
+	retCode = myPod.initialize();
+		cout << "Initialized: " << retCode << endl;
 	//Add 25 Songs
 	myPod.addSong(Song("Title", "Artist", 1));	
 	myPod.addSong(Song("Shape of you", "Ed Sheeran", 2));
@@ -46,7 +52,7 @@ int main()
 
 */
 
-
+	
 
 
 
