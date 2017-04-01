@@ -5,7 +5,6 @@ Problem Number: 5
 Hours spent solving the problem: 
 Instructor: Komogortsev, TSU
 *****************************************************/
-
 #ifndef Song_h
 #define Song_h
 
@@ -16,7 +15,8 @@ using namespace std;
 class Song
 {
 	private:
-	string artist, title;
+	string artist;
+	string title;
 	int size;
 
 	public:
@@ -37,20 +37,6 @@ class Song
 	Song();
 	Song(string title, string artist, int size);
 
-	//Constructors
-//	Song();
-	//{
-		//setTitle("EMPTY");
-		//setArtist("EMPTY");
-	//	setSize(0);
-	//};
-
-	//Song(string title, string artist, int size);
-	//{
-	//	setTitle(t);
-	//	setArtist(a);
-	//	setSize(s);
-	//};
-
+	//bool operator < (const Song 
 };
 #endif
