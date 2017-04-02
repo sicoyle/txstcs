@@ -12,6 +12,7 @@ Instructor: Komogortsev, TSU
 #include <iomanip>
 #include <cstdlib>
 #include <ctime>
+#include <cstring>
 
 using namespace std;
 
@@ -61,6 +62,8 @@ cout << " done." << endl;
 int TsuPod::addSong(string T, string A, int S, int numSong, int &songTotal, int &memTotal)
 {
 	Song s;
+	char c_stringT[256]; //C string title
+	char c_stringA[256]; //C string artist
 
 	myio.open("tsupod_memory.dat", fstream::binary | fstream::out | fstream::in);
 	cout << "tsupod::addsong():" << T << A << S << endl;
@@ -106,23 +109,38 @@ int TsuPod::addSong(string T, string A, int S, int numSong, int &songTotal, int 
 	}
 
 	//if(getRemainingMem() <= getTotalMem())
-	//	cout << "Nothing";	
 	
-	//myio.close();
 cout << "sizeof(Song) == " << sizeof(Song) << endl;
-	//Assign data to song object
-	s.setTitle(T);
-	s.setArtist(A);
-	s.setSize(S);
+
 cout << "fixing to write: song.title() == " << s.getTitle() << endl;
-	//Write data to file
-	myio.seekp((numSong)*sizeof(s), myio.beg);
+	
+	//Convert string variables to c strings
+	strcpy(c_stringT, T.c_str());
+	strcpy(c_stringA, A.c_str());
+
+	//Assign data to song object
+	s.setTitle(c_stringT);
+	s.setArtist(c_stringA);
+	s.setSize(S);
+
+	myio.seekp((numSong-1)*sizeof(s), ios::beg);
+
 long pos = myio.tellp();
 cout << "inputting song in bytes addr [ " << pos; 
-	myio.write(reinterpret_cast<char*>(&s), sizeof(Song));
-	pos = myio.tellp();
+	myio.write(reinterpret_cast<char*>(&s), sizeof(s));
+	//myio.write(s.getTitle().c_str(), s.getTitle().size());
+	//myio.write(s.getArtist().c_str(), s.getArtist().size());
+	//myio.write(reinterpret_cast<char*>(&(s.getSize())),sizeof(s.getSize()));
+
+
+
+pos = myio.tellp();
 cout << " -> " << pos << "];" << endl;
+	cout << endl << "Cstring title " << c_stringT << " artist " << c_stringA << " " << S << endl;
 	myio.close();
+	//Write data to file
+	myio.seekp(0L, ios::beg);	
+	
 	return 0;
 }
 

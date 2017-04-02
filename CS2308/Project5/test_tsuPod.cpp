@@ -2,7 +2,7 @@
 Name: Samantha Coyle
 Date: 3/23/2017
 Problem Number: 5
-Hours spent solving the problem: 9
+Hours spent solving the problem: 15
 Instructor: Komogortsev, TSU
 *****************************************************/
 #include <iostream>
@@ -27,11 +27,11 @@ int main()
 
 
 	//Add 25 Songs
-	myPod.addSong("Title", "Artist", 2, 0, memTotal, songTotal);	
+	myPod.addSong("Hello", "Adele", 9, 1, memTotal, songTotal);	
 
+
+	//myPod.addSong(Song("Shape of you", "Ed Sheeran", 2, 2, memTotal, songTotal));
 	myPod.showList();
-
-//	myPod.addSong(Song("Shape of you", "Ed Sheeran", 2));
 /*	myPod.addSong(Song("Castle on the Hill", "Ed Sheeran", 3));
 	myPod.addSong(Song("Paris", "Chain Smokers", 2));
 	myPod.addSong(Song("Issues", "Julia Michaels", 1));
