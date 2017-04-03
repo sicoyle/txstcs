@@ -140,17 +140,16 @@ cout << "blob size: " << s.blobSize() << endl;
   p = myio.tellp ();
   cout << ":" << p << "] \t new song\nw[" << p << ":" << fileSize +
     s.blobSize () << "] \t post insert old file contents." << endl;
-  if (!lastSong){
     myio.write (reinterpret_cast < char *>(tmpbuf) + insertPoint,
 		fileSize - insertPoint);
 cout << "writing end of file" << endl;
-}
 cout << "PRESHUFFLE DOWN FOR INSERT:" << endl;
 printOffsets();
 
 //current pos update:
 
 cout << "sizeof(0): " << sizeOf(0);
+if(csongs >=1)
   for (int i = csongs; i >= pos; i--)
 {
 cout << "moving offsets:\t pos:[" << i << "]v:" << *(offsets+i) << endl;
