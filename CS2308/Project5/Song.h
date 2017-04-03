@@ -17,13 +17,13 @@ class Song
 	private:
 	string artist;
 	string title;
-	int size;
+	int 	size;	// disk space
 
 	public:
 	//Accessors
-	string getTitle() const {return title;}
-	string getArtist() const {return artist;}
-	int getSize() const {return size;}
+	string getTitle()  { return title; }
+	string getArtist() { return artist; }
+	int getSize()      { return size;}
 
 	//Mutators
 	void setTitle(string t) {title = t;}
@@ -32,11 +32,13 @@ class Song
 
 	//Overload
 	//????????????
-
+//helpers
+int blobSize();
 	//Constructors
 	Song();
 	Song(string title, string artist, int size);
 
+	
 	//bool operator < (const Song 
 };
 #endif

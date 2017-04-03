@@ -13,24 +13,12 @@ using namespace std;
 
 int main()
 {
-	//return code variable
-	int retCode = 0;
-	int memTotal = 0;
-	int songTotal = 0;
-	//Create object
+	//instantiate myPod
 	TsuPod myPod(10, 1);
-	
 
-//	retCode = myPod.initialize();
-//		cout << "Initialized: " << retCode << endl;
-//	myPod.showList();
+	cout << "myPod.addSong(\"Hello\", \"Adele\", 0, 1, memTotal, songTotal)" 
+	     << myPod.addSong("Hello", "Adele", 1, 0) << endl;
 
-
-	//Add 25 Songs
-	retCode = myPod.addSong("Hello", "Adele", 9, 1, memTotal, songTotal);	
-		cout << "Successful song addition: " << retCode << endl;
-
-	//myPod.addSong(Song("Shape of you", "Ed Sheeran", 2, 2, memTotal, songTotal));
 	myPod.showList();
 /*	myPod.addSong(Song("Castle on the Hill", "Ed Sheeran", 3));
 	myPod.addSong(Song("Paris", "Chain Smokers", 2));

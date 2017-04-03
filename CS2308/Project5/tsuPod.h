@@ -14,7 +14,12 @@ using namespace std;
 class TsuPod
 {
 	private:
-	int memory, maxMem, songs, maxSongs, songCount, memLeft;
+	int memory, cmem, songs, csongs; //tsupod resources memory&songs, current count : cmem/csongs
+	int * offsets;
+int updateOffsets(int, int);
+int sizeOf(int);
+int getOffset(int);
+int insertSong(Song, int);
 
 	public:
 	//Constructor
@@ -22,7 +27,7 @@ class TsuPod
 	
 	//Functions
 	int initialize();	
-	int addSong(string T, string A, int S, int songNum, int &songTotal, int &memTotal);
+	int addSong(string T, string A, int S, int songNum);
 	int removeSong(Song s);
 	int clearList();
 	int sortList();

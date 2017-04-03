@@ -23,12 +23,16 @@ Song::Song()
 
 Song::Song(string t, string a, int s)
 {
+
 	setTitle(t);
 	setArtist(a);
 	setSize(s);
-	std::cout << "new song: " << t << ", by " << a << " MEM: " << s << endl;
+	cout << "new song: " << t << ", by " << a << " MEM: " << s << endl;
 }
 
+int Song::blobSize() {
+	return getTitle().size() + getArtist().size() + 2 + sizeof(int);
+}
 //Accessors
 //string Song::getTitle() const {return title;}
 //string Song::getArtist() const {return artist;}

@@ -26,9 +26,13 @@ TsuPod::TsuPod(int mem, int songCount)
 {
 	cout << "NEW TSUPOD: " << endl;
 	memory = mem;
+cmem = csongs = 0;
 	songs = songCount;
-	maxMem = 100;
-	maxSongs = 25;
+offsets = new int[songCount];
+
+for(int i = 0; i < songCount; i++)
+*(offsets+i) = 0;
+
 }
 
 int TsuPod::initialize()
@@ -46,39 +50,73 @@ int TsuPod::initialize()
 		return -1;
 	}
 	
-	//Look through number of songs and initialize
-	for(int index = 0; index < songs; index++)
-	{
-cout << "tsupod::init()"; 
-		myio.seekp((index)*sizeof(s), ios::beg);
-		myio.write(reinterpret_cast<char*>(&s), sizeof(s));
-cout << " done." << endl;
-	}
 
 	//Close the file
 	myio.close();
 
 	return 0;
 }	
+int TsuPod::updateOffsets(int pos, int d) {
+*(offsets+pos) -= d;
+if(pos < csongs-1)
+updateOffsets(pos+1, d);
+}
+int TsuPod::sizeOf(int p) {
+return (p < csongs) ? (getOffset(++p) - getOffset(--p)) : 0;
+}
+int TsuPod::getOffset(int p) {
+return (p < csongs) ? *(offsets + p) : 0;
+}
+
+int TsuPod::insertSong(Song s, int pos){
+char title[s.getTitle().size() + 1];
+strcpy(title,s.getTitle().c_str());
+char artist[s.getArtist().size() + 1];
+strcpy(artist,s.getArtist().c_str());
+int size = s.getSize();
+int insertPoint = getOffset(pos);
+	myio.open("tsupod_memory.dat", fstream::binary | fstream::out | fstream::in);
+	//Assign data to song object
+	int d = s.blobSize() - sizeOf(pos);
+	int fileSize = getOffset(csongs);
+	void * tmpbuf = malloc(fileSize);
+	myio.read((char *)tmpbuf, fileSize);
+	myio.close();
+cout << "copied " << fileSize << " bytes from tsupod_mem.dat" << endl;
+cout << "writing up to byte " << getOffset(pos) << endl;
+	myio.open("tsupod_memory.dat", fstream::binary | fstream::out | fstream::in);
+cout << "INSERT POINT: " << insertPoint << endl;
+if(insertPoint)
+	myio.write((char *) tmpbuf, insertPoint);
+	long p = myio.tellp();
+	cout << "inputting song in bytes addr [ " << p; 
+	myio.write(reinterpret_cast<char *>(title), s.getTitle().size() + 1);
+	myio.write(reinterpret_cast<char *>(artist), s.getArtist().size() + 1);
+	myio.write(reinterpret_cast<char *>(&size), sizeof(int));
+updateOffsets(pos, d);
+
+p = myio.tellp();
+cout << " -> " << p << "];" << endl;
+	cout << endl << "Cstring title " << title << " artist " << artist << " " << size << endl;
+
+	//Close the file
+	myio.close();
+}
 
 //Add desired song to playlist
-int TsuPod::addSong(string T, string A, int S, int numSong, int &songTotal, int &memTotal)
+int TsuPod::addSong(string T, string A, int S, int position)
 {
-	Song s;
-	char c_stringT[256]; //C string title
-	char c_stringA[256]; //C string artist
 
-	myio.open("tsupod_memory.dat", fstream::binary | fstream::out | fstream::in);
 	cout << "tsupod::addsong():" << T << A << S << endl;
 	//Check that size is a valid number. Must be > 0.
-	if(S < 0)
+	if(S < 0 && S > (memory-cmem))
 	{
 		cout << "Error: size must be greater than 0. Song not added." << endl;
 		return -2;
 	}
 
 	//Error if too many songs
-	if(songs > maxSongs)
+	if(csongs == songs)
 	{
 		cout << "Error: lack of space. Song not added." << endl;
 		return -2;
@@ -91,63 +129,18 @@ int TsuPod::addSong(string T, string A, int S, int numSong, int &songTotal, int 
 		return -2;
 	}
 
-	//If not errors, increment song total
-	songTotal++;
-
 	//Add size of added song to mem total
-	memTotal += S;
-
-	//Error if too many songs
-	if(songTotal > maxSongs)
-	{
-		cout << "Error: Song not added. Too many songs." << endl;
-		return -2;
-	}
-
-	//Error if too much memory would be used
-	if(memTotal > maxMem)
-	{
-		cout << "Error: Song not added. Too much memory would be used." << endl;
-		return -2;
-	}
+	cmem += S;
+	//If not errors, increment song total
+	csongs++;
 
 	//if(getRemainingMem() <= getTotalMem())
 	
 cout << "sizeof(Song) == " << sizeof(Song) << endl;
 
-cout << "fixing to write: song.title() == " << s.getTitle() << endl;
 	
-	//Convert string variables to c strings
-	strcpy(c_stringT, T.c_str());
-	strcpy(c_stringA, A.c_str());
-
-	//Assign data to song object
-	s.setTitle(c_stringT);
-	s.setArtist(c_stringA);
-	s.setSize(S);
-	cout << "HERE title: " << c_stringT << " artist " << c_stringA << " size " << S << endl;
-	
-	myio.seekp((numSong-1) * sizeof(s), ios::beg);
-
-	long pos = myio.tellp();
-	cout << "inputting song in bytes addr [ " << pos; 
-	myio.write(reinterpret_cast<char *>(&s), sizeof(s));
-//	myio.write(s.getTitle().c_str(), s.getTitle().size());
-//	myio.write(s.getArtist().c_str(), s.getArtist().size());
-//	myio.write(reinterpret_cast<char *>(&s.getSize()),sizeof(s.getSize()));
-
-
-
-pos = myio.tellp();
-cout << " -> " << pos << "];" << endl;
-	cout << endl << "Cstring title " << c_stringT << " artist " << c_stringA << " " << S << endl;
-
-	//Write data to file
-	myio.seekp(0L, ios::beg);	
-	
-
-	//Close the file
-	myio.close();
+	Song s(T, A, S);
+insertSong(s, position);
 	return 0;
 }
 
@@ -178,21 +171,33 @@ int TsuPod::sortList()
 void TsuPod::showList()
 {
 	Song s;	
-
+int timeout = 100;
 	myio.open("tsupod_memory.dat", fstream::binary | fstream::in);
 	cout << "Song List: " << endl;
 	
-	for(int index = 0; index < songs; index++)
+	for(int index = 0; index < csongs; index++)
 	{
-		myio.seekg((index)*sizeof(s), myio.beg);
 long pos = myio.tellg();
+int textSize = sizeOf(index);
+char text[textSize];
+cout << "textSize: " << textSize << endl;
+int  size = 0;
 cout << "reading song from bytes addr [ " << pos << " -> "; 
-		myio.read(reinterpret_cast<char*>(&s), sizeof(s));
+		myio.read(reinterpret_cast<char*>(text), textSize-4);
+		myio.read(reinterpret_cast<char*>(&size), sizeof(int));
+char* artist = text;
+while(*(++artist) != '\0' && timeout--);
+artist++;
+
+string t(text);
+string a(artist);
+
+Song s(t, a, size);
+cout << "T: " << s.getTitle() << "; A = " << s.getArtist() << "; S = " << s.getSize() << endl;
+cout << "wppt" << endl;
+
 pos = myio.tellg();
 cout << pos << " ];" << endl;
-		cout << "Song number: " << index + 1 << " titled: " << s.getTitle();
-		cout << " written by: " << s.getArtist() << " with size of: " << s.getSize();
-		cout << " MB" << endl;
 	}
 
 	myio.close();
@@ -201,7 +206,7 @@ cout << pos << " ];" << endl;
 //Display the total memory space left over
 int TsuPod::getTotalMem()
 {
-	return maxMem;
+	return memory;
 }
 
 //Shuffle the song list into a different order
