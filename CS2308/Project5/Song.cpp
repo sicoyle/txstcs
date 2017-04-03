@@ -23,11 +23,10 @@ Song::Song()
 
 Song::Song(string t, string a, int s)
 {
-
 	setTitle(t);
 	setArtist(a);
 	setSize(s);
-	cout << "new song: " << t << ", by " << a << " MEM: " << s << endl;
+	cout << "Song Constructor!!\nSong::Song(" << t << ", " << a << ", " << s << ");" << endl;
 }
 
 int Song::blobSize() {
