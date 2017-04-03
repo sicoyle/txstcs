@@ -18,12 +18,12 @@ int main()
 
         myPod.addSong("Hello", "Adele", 1, 0);
 
-	myPod.addSong("Castle on the Hill", "Ed Sheeran", 3, 0);
-	myPod.addSong("Paris", "Chain Smokers", 2, 2);
-//	myPod.addSong("Issues", "Julia Michaels", 1, 0);
-//	myPod.addSong("Starboy", "The Weeknd", 3, 0);
-//	myPod.addSong("Closer", "Chainsmokers", 2, 1);
+	myPod.addSong("Castle on the Hill", "Ed Sheeran",2, 0);
+	myPod.addSong("Paris", "Chain Smokers", 3, 0);
+	myPod.addSong("Issues", "Julia Michaels", 4, 0);
+	myPod.addSong("Starboy", "The Weeknd", 5, 0);
 	myPod.showList();
+//	myPod.addSong("Closer", "Chainsmokers", 2, 1);
 /*	myPod.addSong(Song("Side to Side", "Ariana Grande", 3));
 	myPod.addSong(Song("Fake Love", "Drake", 2));
 	myPod.addSong(Song("Heathens", "Twenty One Pilots", 4));
