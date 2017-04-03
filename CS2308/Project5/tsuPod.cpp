@@ -14,6 +14,9 @@ Instructor: Komogortsev, TSU
 #include <ctime>
 #include <cstring>
 
+#include <string>
+
+
 using namespace std;
 
 fstream myio;
@@ -47,7 +50,7 @@ int TsuPod::initialize()
 	for(int index = 0; index < songs; index++)
 	{
 cout << "tsupod::init()"; 
-		myio.seekp((index)*sizeof(s) - 1, ios::beg);
+		myio.seekp((index)*sizeof(s), ios::beg);
 		myio.write(reinterpret_cast<char*>(&s), sizeof(s));
 cout << " done." << endl;
 	}
@@ -122,25 +125,29 @@ cout << "fixing to write: song.title() == " << s.getTitle() << endl;
 	s.setTitle(c_stringT);
 	s.setArtist(c_stringA);
 	s.setSize(S);
+	cout << "HERE title: " << c_stringT << " artist " << c_stringA << " size " << S << endl;
+	
+	myio.seekp((numSong-1) * sizeof(s), ios::beg);
 
-	myio.seekp((numSong-1)*sizeof(s), ios::beg);
-
-long pos = myio.tellp();
-cout << "inputting song in bytes addr [ " << pos; 
-	myio.write(reinterpret_cast<char*>(&s), sizeof(s));
-	//myio.write(s.getTitle().c_str(), s.getTitle().size());
-	//myio.write(s.getArtist().c_str(), s.getArtist().size());
-	//myio.write(reinterpret_cast<char*>(&(s.getSize())),sizeof(s.getSize()));
+	long pos = myio.tellp();
+	cout << "inputting song in bytes addr [ " << pos; 
+	myio.write(reinterpret_cast<char *>(&s), sizeof(s));
+//	myio.write(s.getTitle().c_str(), s.getTitle().size());
+//	myio.write(s.getArtist().c_str(), s.getArtist().size());
+//	myio.write(reinterpret_cast<char *>(&s.getSize()),sizeof(s.getSize()));
 
 
 
 pos = myio.tellp();
 cout << " -> " << pos << "];" << endl;
 	cout << endl << "Cstring title " << c_stringT << " artist " << c_stringA << " " << S << endl;
-	myio.close();
+
 	//Write data to file
 	myio.seekp(0L, ios::beg);	
 	
+
+	//Close the file
+	myio.close();
 	return 0;
 }
 

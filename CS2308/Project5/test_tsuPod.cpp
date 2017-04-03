@@ -2,7 +2,7 @@
 Name: Samantha Coyle
 Date: 3/23/2017
 Problem Number: 5
-Hours spent solving the problem: 15
+Hours spent solving the problem: 18
 Instructor: Komogortsev, TSU
 *****************************************************/
 #include <iostream>
@@ -27,8 +27,8 @@ int main()
 
 
 	//Add 25 Songs
-	myPod.addSong("Hello", "Adele", 9, 1, memTotal, songTotal);	
-
+	retCode = myPod.addSong("Hello", "Adele", 9, 1, memTotal, songTotal);	
+		cout << "Successful song addition: " << retCode << endl;
 
 	//myPod.addSong(Song("Shape of you", "Ed Sheeran", 2, 2, memTotal, songTotal));
 	myPod.showList();
