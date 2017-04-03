@@ -14,7 +14,7 @@ using namespace std;
 int main()
 {
 	//instantiate myPod
-	TsuPod myPod(100, 10);
+	TsuPod myPod(100, 25);
 
         myPod.addSong("Hello", "Adele", 1, 0);
 
@@ -22,27 +22,26 @@ int main()
 	myPod.addSong("Paris", "Chain Smokers", 3, 0);
 	myPod.addSong("Issues", "Julia Michaels", 4, 0);
 	myPod.addSong("Starboy", "The Weeknd", 5, 0);
-	myPod.showList();
-//	myPod.addSong("Closer", "Chainsmokers", 2, 1);
-/*	myPod.addSong(Song("Side to Side", "Ariana Grande", 3));
-	myPod.addSong(Song("Fake Love", "Drake", 2));
-	myPod.addSong(Song("Heathens", "Twenty One Pilots", 4));
-	myPod.addSong(Song("Caroline", "Anime", 3));
-	myPod.addSong(Song("Scars To Your Beautiful", "Alessia Cara", 2));
-	myPod.addSong(Song("All Time Low", "Jon Bellion", 2));
-	myPod.addSong(Song("Mercy", "Shawn Mendes", 4));
-	myPod.addSong(Song("I Don't Wanna Live Forever", "Taylor Swift", 4));
-	myPod.addSong(Song("Love On The Brain", "Rihanna", 3));
-	myPod.addSong(Song("Treat You Better", "Shawn Mendes", 3));
-	myPod.addSong(Song("Blue Ain't Your Color", "Keith Urban", 4));
-	myPod.addSong(Song("I Hate U I Love U", "Gnash", 4));
-	myPod.addSong(Song("Don't Let Me Down", "Chainsmokers", 2));
-	myPod.addSong(Song("HandClap", "Fitz And The Tantrums", 1));
-	myPod.addSong(Song("Immortal", "J. Cole", 1));
-	myPod.addSong(Song("Make Me (Cry)", "Noah Cyrus", 6));
-	myPod.addSong(Song("Twin Size Mattress", "The Front Bottoms", 7));
-	myPod.addSong(Song("Swimming Pool", "The Front Bottoms", 4));
-	myPod.addSong(Song("Au Revoir", "The Front Bottoms", 8));
-*/
+	myPod.addSong("Closer", "Chainsmokers", 2, 0);
+	myPod.addSong("Side to Side", "Ariana Grande", 3, 0);
+	myPod.addSong("Fake Love", "Drake", 3, 0);
+	myPod.addSong("Heathens", "Twenty One Pilots", 3, 0);
+	myPod.addSong("Caroline", "Anime", 3, 0);
+	myPod.addSong("Scars To Your Beautiful", "Alessia Cara", 3, 0);
+	myPod.addSong("All Time Low", "Jon Bellion", 3, 0);
+	myPod.addSong("Mercy", "Shawn Mendes", 3, 0);
+	myPod.addSong("I Don't Wanna Live Forever", "Taylor Swift", 3, 0);
+	myPod.addSong("Love On The Brain", "Rihanna", 3, 0);
+	myPod.addSong("Treat You Better", "Shawn Mendes", 3, 0);
+	myPod.addSong("Blue Ain't Your Color", "Keith Urban", 3, 0);
+	myPod.addSong("I Hate U I Love U", "Gnash", 3, 0);
+	myPod.addSong("Don't Let Me Down", "Chainsmokers", 3, 0);
+	myPod.addSong("HandClap", "Fitz And The Tantrums", 3, 0);
+	myPod.addSong("Immortal", "J. Cole", 3, 0);
+	myPod.addSong("Make Me (Cry)", "Noah Cyrus", 3, 0);
+	myPod.addSong("Twin Size Mattress", "The Front Bottoms", 3, 0);
+	myPod.addSong("Swimming Pool", "The Front Bottoms", 3, 0);
+	myPod.addSong("Au Revoir", "The Front Bottoms", 3, 0);
+myPod.showList();
 	return 0;	
 }
