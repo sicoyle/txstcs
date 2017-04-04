@@ -2,7 +2,7 @@
 Name: Samantha Coyle
 Date: 3/23/2017
 Problem Number: 5
-Hours spent solving the problem: 
+Hours spent solving the problem: 25
 Instructor: Komogortsev, TSU
 *****************************************************/
 #include <iostream>
@@ -117,12 +117,11 @@ cout << "\t[" << i << "]: " << *(offsets+i);
 	myio.close();
 }
 
-//Add desired song to playlist
-int TsuPod::addSong(string T, string A, int S, int position)
+//Return neg if error with trying to add song
+int TsuPod::checkAddSong(string T, string A, int S)
 {
-
 	//Check that size is a valid number. Must be > 0.
-	if(S < 0 && S > (memory-cmem))
+	if(S < 0 && S > (getTotalMem()-cmem))
 	{
 		cout << "Error: size must be greater than 0. Song not added." << endl;
 		return -2;
@@ -142,14 +141,20 @@ int TsuPod::addSong(string T, string A, int S, int position)
 		return -2;
 	}
 
+	return 0;
+}
+
+//Add desired song to playlist
+int TsuPod::addSong(string T, string A, int S, int position)
+{
+	//Check if song can be added
+	if(checkAddSong(T,A,S) < 0)
+		return -1;
+
 	//Add size of added song to mem total
 	cmem += S;
 	//If not errors, increment song total
 	csongs++;
-
-	//if(getRemainingMem() <= getTotalMem())
-	
-
 	
 	Song s(T, A, S);
 insertSong(s, position);
@@ -157,11 +162,36 @@ insertSong(s, position);
 }
 
 //Remove desired song to playlist
-int TsuPod::removeSong(Song s)
+int TsuPod::removeSong(string T, string A, int S)
 {
+	//Get file size and make temp variable
+	int fileSize = getOffset(csongs - 2);
+	void * tempFile = malloc(fileSize);
 
+	//Helper variables
+	long pos = myio.tellg();	//Give location
+	int removalPoint = getOffset(pos - 1);	//Starting point for removal
 
+	//Copy text over up to song position to be removed
+	myio.read((char *)tempFile, fileSize);
+	myio.close();
 
+	cout << "In remove song, I am here initially: " << removalPoint << endl;
+
+	//Write up to song to be removed
+	myio.write((char *)tempFile, removalPoint);
+
+	cout << "After writing up to song to be removed, I am here: " << removalPoint << endl;
+
+	//Helper variable to know where I am
+	long p = myio.tellp();
+	cout << "w[" << p << endl;
+	
+	//Write file after song that I want removed
+	myio.write(reinterpret_cast<char*>(tempFile - removalPoint), (fileSize - removalPoint));
+		
+
+	return 0;
 }
 
 //Clear the song list

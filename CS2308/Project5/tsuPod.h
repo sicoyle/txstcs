@@ -27,8 +27,9 @@ int insertSong(Song, int);
 	
 	//Functions
 	int initialize();	
+	int checkAddSong(string T, string A, int S);
 	int addSong(string T, string A, int S, int songNum);
-	int removeSong(Song s);
+	int removeSong(string T, string A, int S);
 	int clearList();
 	int sortList();
 	void showList();
