@@ -16,10 +16,11 @@ class TsuPod
 	private:
 	int memory, cmem, songs, csongs; //tsupod resources memory&songs, current count : cmem/csongs
 	int * offsets;
-int updateOffsets(int, int);
+void updateOffsets(int, int);
 int sizeOf(int);
-int getOffset(int);
+int getsOffset(int);
 int insertSong(Song, int);
+void printOffsets();
 
 	public:
 	//Constructor
