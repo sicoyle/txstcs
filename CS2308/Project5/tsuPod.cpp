@@ -198,10 +198,10 @@ int TsuPod::insertSong (Song s, int pos)
 }
 
 //Return neg if error with trying to add song
-int TsuPod::checkAddSong(string T, string A, int S)
+int TsuPod::checkAddSong(string T, string A, int S, int cmem)
 {
 	//Check that size is a valid number. Must be > 0.
-	if(S < 0 && S > (getTotalMem()-cmem))
+	if(S < 0 && S > ((getRemainingMem(cmem))))
 	{
 		cout << "Error: size must be greater than 0. Song not added." << endl;
 		return -2;
@@ -228,7 +228,7 @@ int TsuPod::checkAddSong(string T, string A, int S)
 int TsuPod::addSong(string T, string A, int S, int position)
 {
 	//Check if song can be added
-	if(checkAddSong(T,A,S) < 0)
+	if(checkAddSong(T,A,S,cmem) < 0)
 		return -1;
 	
 	Song s(T, A, S);
@@ -244,7 +244,7 @@ int TsuPod::addSong(string T, string A, int S, int position)
 
 //Remove desired song to playlist
 int TsuPod::removeSong (string T, string A, int S)
-{
+{/*
 	//Get file size and make temp variable
 	int fileSize = getsOffset(csongs - 2);
 	void * tempFile = malloc(fileSize);
@@ -270,7 +270,7 @@ int TsuPod::removeSong (string T, string A, int S)
 	
 	//Write file after song that I want removed
 	myio.write(reinterpret_cast<char*>(tempFile - removalPoint), (fileSize - removalPoint));
-		
+*/		
 	return 0;
 }
 
@@ -332,7 +332,10 @@ void TsuPod::showList ()
       		cout << "TsuPod::showList::Song(\"" << s.getTitle () << "\", \"" << s.
 		getArtist () << "\", " << s.getSize () << ");" << endl;
     	}
-
+	
+	//Display remaining memory to console
+	cout << "Total remaining memory: " << getRemainingMem(cmem) << endl;
+	
 	//Close file
 	myio.close ();
 }
@@ -350,7 +353,7 @@ int TsuPod::shuffle()
 }
 
 //Get the remaining memory space left over
-int TsuPod::getRemainingMem()
+int TsuPod::getRemainingMem(int cmem)
 {
-//      return memTotal;
+      return (getTotalMem() - cmem);
 }
