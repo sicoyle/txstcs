@@ -2,7 +2,7 @@
 Name: Samantha Coyle
 Date: 3/23/2017
 Problem Number: 5
-Hours spent solving the problem: 28
+Hours spent solving the problem: 32
 Instructor: Komogortsev, TSU
 *****************************************************/
 #include <iostream>
@@ -244,20 +244,65 @@ int TsuPod::addSong(string T, string A, int S, int position)
 
 //Remove desired song to playlist
 int TsuPod::removeSong (string T, string A, int S)
-{/*
+{
+	Song s(T, A, S);
+
+	//Open the file in binary
+	myio.open("tsupod_memory.dat", fstream::binary | fstream::out | fstream::in);
+
+	//Create char arry to allow deep copy of string
+	char title[s.getTitle().size() + 1];
+	strcpy(title, s.getTitle().c_str());
+	char artist[s.getArtist().size() + 1];
+	strcpy(artist, s.getArtist().c_str());
+	int size = s.getSize();
+	
+	
 	//Get file size and make temp variable
 	int fileSize = getsOffset(csongs - 2);
 	void * tempFile = malloc(fileSize);
-
-	//Helper variables
-	long pos = myio.tellg();	//Give location
-	int removalPoint = getsOffset(pos - 1);	//Starting point for removal
 
 	//Copy text over up to song position to be removed
 	myio.read((char *)tempFile, fileSize);
 	myio.close();
 
-	cout << "In remove song, I am here initially: " << removalPoint << endl;
+	//Show how many bytes were copied
+	cout << "copied " << fileSize << " bytes from tsupod_memory.dat" << endl;
+	
+//	cout << "In remove song, I am here initially: " << removalPoint << endl;
+
+	myio.open("tsupod_memory.dat", fstream::binary | fstream::out | fstream::in);
+	
+	Song s2;
+	
+	for(int i = 0; i < csongs; i++)
+	{
+		
+		//if (i.getTitle() == T && i.getArtist() == A && i.getSize() == S)
+		//	cout << "I found the song to remove******************************************************************************" << endl;
+		if(s.operator == (s2))
+		{
+			cout << "SUCCESS*********************************************************************************************" << endl;
+			
+		}
+
+
+
+	}
+
+
+
+
+
+
+
+	//Helper variables
+	long pos = myio.tellp();	//Give location
+	int removalPoint = getsOffset(pos - 1);	//Starting point for removal
+
+	cout << "Removal point: " << removalPoint << endl;
+	cout << "blob size: " << s.blobSize() << endl;
+	cout << "w[0:" << removalPoint << "] \t\t preinsert old file contents." << endl;
 
 	//Write up to song to be removed
 	myio.write((char *)tempFile, removalPoint);
@@ -267,10 +312,20 @@ int TsuPod::removeSong (string T, string A, int S)
 	//Helper variable to know where I am
 	long p = myio.tellp();
 	cout << "w[" << p << endl;
-	
+
+
+
+
+
+
+//	myio.seekp((fileSize - s.blobSize - removalPoint), ios::beg);
+
 	//Write file after song that I want removed
 	myio.write(reinterpret_cast<char*>(tempFile - removalPoint), (fileSize - removalPoint));
-*/		
+	
+	cout << "Writing rest of file" << endl;
+	
+		
 	return 0;
 }
 

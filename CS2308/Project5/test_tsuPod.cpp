@@ -42,10 +42,14 @@ int main()
 	myPod.addSong("Swimming Pool", "The Front Bottoms", 3, 0);
 	myPod.addSong("Au Revoir", "The Front Bottoms", 3, 0);
 
+	//Display contents of tsupod after adding songs
 	myPod.showList();
 
 	//Remove a song
-//	myPod.removeSong("Side to Side", "Ariana Grande", 3);
+	myPod.removeSong("Side to Side", "Ariana Grande", 3);
+
+	//Display contents after removing a song
+//	myPod.showList();
 
 	return 0;	
 }

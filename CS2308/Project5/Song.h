@@ -39,7 +39,7 @@ int blobSize();
 	Song(string title, string artist, int size);
 
 	
-	//bool operator < (const Song 
+	const bool operator == (const Song &s);
 };
 #endif
 
