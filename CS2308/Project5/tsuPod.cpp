@@ -2,7 +2,7 @@
 Name: Samantha Coyle
 Date: 3/23/2017
 Problem Number: 5
-Hours spent solving the problem: 
+Hours spent solving the problem: 32
 Instructor: Komogortsev, TSU
 *****************************************************/
 #include <iostream>
@@ -16,9 +16,9 @@ Instructor: Komogortsev, TSU
 #include <stdlib.h>
 #include <string>
 
-
 using namespace std;
 
+//File object
 fstream myio;
 
 //Constructor with parameters
@@ -35,28 +35,27 @@ TsuPod::TsuPod (int mem, int songCount)
 
 srand(0);
 }
-int
-TsuPod::initialize ()
+
+//Initialize the tsuPod
+int TsuPod::initialize ()
 {
-  //Create object
-  Song s;
+  	//Create object
+  	Song s;
 
-  //Open file in binary mode
-  myio.open ("tsupod_memory.dat",
-	     ios::binary | ios::out | ios::in | ios::app);
+  	//Open file in binary mode
+  	myio.open ("tsupod_memory.dat",ios::binary | ios::out | ios::in | ios::app);
 
-  //Check that file opens
-  if (myio.fail ())
-    {
-      cout << "Error: file did not open." << endl;
-      return -1;
-    }
+  	//Check that file opens
+  	if (myio.fail ())
+    	{
+      		cout << "Error: file did not open." << endl;
+      		return -1;
+    	}
 
+  	//Close the file
+  	myio.close ();
 
-  //Close the file
-  myio.close ();
-
-  return 0;
+  	return 0;
 }
 Song TsuPod::getSong(int pos) {                                                                                                                                         
                                                                                                                                                                         
@@ -89,163 +88,277 @@ return s;
 void
 TsuPod::updateOffsets (int pos, int d)
 {
-cout << "updating offsets:\t pos:" << pos << " d:" << d << endl;
-cout << "\tcurr val: " << *(offsets+pos) << " - > new val: " << *(offsets+pos)+d << endl;
-  *(offsets + (pos)) += d;
-if(++pos < csongs+1)
-  updateOffsets (pos, d);
+	cout << "updating offsets:\t pos:" << pos << " d:" << d << endl;
+	cout << "\tcurr val: " << *(offsets+pos) << " - > new val: " << *(offsets+pos)+d << endl;
+  	*(offsets + (pos)) += d;
+	if(++pos < csongs+1)
+  		updateOffsets (pos, d);
 }
 
 int TsuPod::getRandomSongNumber(){
 return rand() % csongs;
 }
-int
-TsuPod::sizeOf (int p)
+//Return the size of position
+int TsuPod::sizeOf (int p)
 {
-if(p<=0)
-return *(offsets);
-  return (getsOffset (p+1) - getsOffset (p));
+	if(p<=0)
+		return *(offsets);
+  	return (getsOffset (p+1) - getsOffset (p));
 }
 
-int
-TsuPod::getsOffset (int p)
+//Get the offset value for position
+int TsuPod::getsOffset (int p)
 {
-if(!p)
-return 0;
-  return *(offsets + p - 1);
+	if(!p)
+		return 0;
+  	return *(offsets + p - 1);
 }
 
-void
-TsuPod::printOffsets(){
-
-cout << "current song #: " << csongs << endl;
-cout << "*(offsets+i):"<<endl;
-for(int i = 0; i < songs; i++)
-printf("[%d :: %d]\n", i, *(offsets+i));
-
-cout<< "getsOffset(i):" <<endl;
-for(int i = 0; i < songs; i++)
-printf("[%d :: %d]\n", i, getsOffset(i));
-
-cout<< "sizeOf(i):"<<endl;
-for(int i = 0; i < songs; i++)
-printf("[%d :: %d]\n", i, sizeOf(i));
-}
-int
-TsuPod::insertSong (Song s, int pos)
+//Show me off set values
+void TsuPod::printOffsets()
 {
-  char title[s.getTitle ().size () + 1];
-  strcpy (title, s.getTitle ().c_str ());
-  char artist[s.getArtist ().size () + 1];
-  strcpy (artist, s.getArtist ().c_str ());
-  int size = s.getSize ();
-  int insertPoint = getsOffset (pos);
+	cout << "current song #: " << csongs << endl;
+	cout << "*(offsets+i):"<<endl;
 
-  bool lastSong = (pos == csongs - 1);
-  cout << "lastSong == " << lastSong << endl;
-  myio.open ("tsupod_memory.dat",
-	     fstream::binary | fstream::out | fstream::in);
-  //Assign data to song object
-  cout << "consumed songs at insersetion: " << csongs << endl;
-  int fileSize = getsOffset (csongs);
-  cout << "size of file currently copying into mem: " << getsOffset (csongs) <<
-    endl;
-  void *tmpbuf = malloc (fileSize);
-  myio.read ((char *) tmpbuf, fileSize);
-  myio.close ();
-  cout << "copied " << fileSize << " bytes from tsupod_mem.dat" << endl;
-  cout << "writing up to byte " << getsOffset (pos) << endl;
-  myio.open ("tsupod_memory.dat",
-	     fstream::binary | fstream::out | fstream::in);
-  cout << "INSERT POINT: " << insertPoint << endl;
-cout << "blob size: " << s.blobSize() << endl;
-//if(insertPoint)
-  cout << "w[0:" << insertPoint << "] \t\t preinsert old file contents." <<
-    endl;
-  myio.write ((char *) tmpbuf, insertPoint);
-  long p = myio.tellp ();
-  cout << "w[" << p;
-  myio.write (reinterpret_cast < char *>(title), s.getTitle ().size () + 1);
-  myio.write (reinterpret_cast < char *>(artist), s.getArtist ().size () + 1);
-  myio.write (reinterpret_cast < char *>(&size), sizeof (int));
-  p = myio.tellp ();
-  cout << ":" << p << "] \t new song\nw[" << p << ":" << fileSize +
-    s.blobSize () << "] \t post insert old file contents." << endl;
-    myio.write (reinterpret_cast < char *>(tmpbuf) + insertPoint,
-		fileSize - insertPoint);
-cout << "writing end of file" << endl;
-cout << "PRESHUFFLE DOWN FOR INSERT:" << endl;
-printOffsets();
+	for(int i = 0; i < songs; i++)
+		cout << "[" << i << " :: " << *(offsets+i) << "]" << endl;
+//printf("[%d :: %d]\n", i, *(offsets+i));
 
-//current pos update:
+	cout<< "getsOffset(i):" <<endl;
 
-cout << "sizeof(0): " << sizeOf(0);
-if(csongs >=1)
-  for (int i = csongs; i >= pos; i--)
-{
-cout << "moving offsets:\t pos:[" << i << "]v:" << *(offsets+i) << endl;
-cout << "\tto pos:[" << i+1 << "]v:" << *(offsets+i+1) << endl;
-*(offsets+i+1) = *(offsets+i);
+	for(int i = 0; i < songs; i++)
+		cout << "[" << i << " :: " << getsOffset(i) << endl;
+//printf("[%d :: %d]\n", i, getsOffset(i));
+
+	cout<< "sizeOf(i):"<<endl;
+
+	for(int i = 0; i < songs; i++)
+		cout << "[" << i << " :: " << sizeOf(i) << endl;
+//printf("[%d :: %d]\n", i, sizeOf(i));
 }
-cout << "PREUPDATE:" << endl;
-if(pos == 0)
-*(offsets) = s.blobSize();
-updateOffsets (pos+1, s.blobSize());
-cout << "postupdate!!!!:" << endl;
-printOffsets();
-  //Close the file
-  myio.close ();
+
+//Insert the actual song
+int TsuPod::insertSong (Song s, int pos)
+{
+	//Create char array to allow deep copy of string
+  	char title[s.getTitle ().size () + 1];
+  	strcpy (title, s.getTitle ().c_str ());
+  	char artist[s.getArtist ().size () + 1];
+  	strcpy (artist, s.getArtist ().c_str ());
+
+	//Other variables to help with correct location
+  	int size = s.getSize();
+  	int insertPoint = getsOffset(pos);
+  	bool lastSong = (pos == csongs - 1);
+  	int fileSize = getsOffset(csongs); //File size
+  	void *tmpbuf = malloc(fileSize); //Temp variable to store file
+  	
+	cout << "lastSong == " << lastSong << endl;
+  	
+	//Open file in binary
+	myio.open ("tsupod_memory.dat",fstream::binary | fstream::out | fstream::in);
+	
+	cout << "consumed songs at insersetion: " << csongs << endl;
+  	cout << "size of file currently copying into mem: " << getsOffset(csongs) <<
+  	endl;
+
+	//Read in to tmpbuf the file and close file
+  	myio.read ((char *) tmpbuf, fileSize);
+  	myio.close ();
+
+	//Show how many bytes were copied
+  	cout << "copied " << fileSize << " bytes from tsupod_mem.dat" << endl;
+  	cout << "writing up to byte " << getsOffset (pos) << endl;
+
+	//Open file
+  	myio.open ("tsupod_memory.dat",fstream::binary | fstream::out | fstream::in);
+  	
+	//Show where insert point is
+	cout << "INSERT POINT: " << insertPoint << endl;
+	cout << "blob size: " << s.blobSize() << endl;
+	cout << "w[0:" << insertPoint << "] \t\t preinsert old file contents." <<
+    	endl;
+
+	//Write the file up to insertion point
+  	myio.write ((char *) tmpbuf, insertPoint);
+
+	//Variable to tell me where I am
+  	long p = myio.tellp ();
+  	cout << "w[" << p;
+  	
+	//Write title, artist, and sizee to file
+	myio.write (reinterpret_cast < char *>(title), s.getTitle ().size () + 1);
+  	myio.write (reinterpret_cast < char *>(artist), s.getArtist ().size () + 1);
+  	myio.write (reinterpret_cast < char *>(&size), sizeof (int));
+
+	//Check where I am at in file
+  	p = myio.tellp ();
+  	cout << ":" << p << "] \t new song\nw[" << p << ":" << fileSize +
+    	s.blobSize () << "] \t post insert old file contents." << endl;
+
+	//Write the rest of the file after song was added
+    	myio.write (reinterpret_cast < char *>(tmpbuf) + insertPoint,
+			 fileSize - insertPoint);
+	
+	cout << "writing end of file" << endl;
+	cout << "PRESHUFFLE DOWN FOR INSERT:" << endl;
+	printOffsets();
+	cout << "sizeof(0): " << sizeOf(0);
+	
+	//Show me offsets for consumed songs
+	if(csongs >=1)
+  		for (int i = csongs; i >= pos; i--)
+		{
+			cout << "moving offsets:\t pos:[" << i << "]v:" << *(offsets+i) << endl;
+			cout << "\tto pos:[" << i+1 << "]v:" << *(offsets+i+1) << endl;
+			*(offsets+i+1) = *(offsets+i);
+		}
+
+	cout << "PREUPDATE:" << endl;
+	
+	if(pos == 0)
+		*(offsets) = s.blobSize();
+	
+	//Update offsets
+	updateOffsets (pos+1, s.blobSize());
+	cout << "postupdate!!!!:" << endl;
+	printOffsets();
+
+  	//Close the file
+  	myio.close ();
+}
+
+//Return neg if error with trying to add song
+int TsuPod::checkAddSong(string T, string A, int S, int cmem)
+{
+	//Check that size is a valid number. Must be > 0.
+	if(S < 0 && S > ((getRemainingMem(cmem))))
+	{
+		cout << "Error: size must be greater than 0. Song not added." << endl;
+		return -2;
+	}
+
+	//Error if too many songs
+	if(csongs == songs)
+	{
+		cout << "Error: lack of space. Song not added." << endl;
+		return -2;
+	}
+	
+	//Error if blank entry
+	if(T == " " || A == " ")
+	{
+		cout << "Error: title/artist can not be blank." << endl;
+		return -2;
+	}
+
+	return 0;
 }
 
 //Add desired song to playlist
-int
-TsuPod::addSong (string T, string A, int S, int position)
+int TsuPod::addSong(string T, string A, int S, int position)
 {
+	//Check if song can be added
+	if(checkAddSong(T,A,S,cmem) < 0)
+		return -1;
+	
+	Song s(T, A, S);
+	insertSong(s, position);
 
-  //Check that size is a valid number. Must be > 0.
-  if (S < 0 && S > (memory - cmem))
-    {
-      cout << "Error: size must be greater than 0. Song not added." << endl;
-      return -2;
-    }
+	//Add size of added song to mem total
+	cmem += S;
+	//If not errors, increment song total
+	csongs++;
 
-  //Error if too many songs
-  if (csongs == songs)
-    {
-      cout << "Error: lack of space. Song not added." << endl;
-      return -2;
-    }
-
-  //Error if blank entry
-  if (T == " " || A == " ")
-    {
-      cout << "Error: title/artist can not be blank." << endl;
-      return -2;
-    }
-
-  //Add size of added song to mem total
-  cmem += S;
-  //If not errors, increment song total
-
-
-  //if(getRemainingMem() <= getTotalMem())
-
-
-
-  Song s (T, A, S);
-  insertSong (s, position);
-  csongs++;
-return 0;
+	return 0;
 }
-
+/*
 //Remove desired song to playlist
-int
-TsuPod::removeSong (Song s)
+int TsuPod::removeSong (Song s)
 {
+	Song s(T, A, S);
+
+	//Open the file in binary
+	myio.open("tsupod_memory.dat", fstream::binary | fstream::out | fstream::in);
+
+	//Create char arry to allow deep copy of string
+	char title[s.getTitle().size() + 1];
+	strcpy(title, s.getTitle().c_str());
+	char artist[s.getArtist().size() + 1];
+	strcpy(artist, s.getArtist().c_str());
+	int size = s.getSize();
+	
+	
+	//Get file size and make temp variable
+	int fileSize = getsOffset(csongs - 2);
+	void * tempFile = malloc(fileSize);
+
+	//Copy text over up to song position to be removed
+	myio.read((char *)tempFile, fileSize);
+	myio.close();
+
+	//Show how many bytes were copied
+	cout << "copied " << fileSize << " bytes from tsupod_memory.dat" << endl;
+	
+//	cout << "In remove song, I am here initially: " << removalPoint << endl;
+
+	myio.open("tsupod_memory.dat", fstream::binary | fstream::out | fstream::in);
+	
+	Song s2;
+	
+	for(int i = 0; i < csongs; i++)
+	{
+		
+		//if (i.getTitle() == T && i.getArtist() == A && i.getSize() == S)
+		//	cout << "I found the song to remove******************************************************************************" << endl;
+		if(s.operator == (s2))
+		{
+			cout << "SUCCESS*********************************************************************************************" << endl;
+			
+		}
 
 
 
-}
+	}
+
+
+
+
+
+
+
+	//Helper variables
+	long pos = myio.tellp();	//Give location
+	int removalPoint = getsOffset(pos - 1);	//Starting point for removal
+
+	cout << "Removal point: " << removalPoint << endl;
+	cout << "blob size: " << s.blobSize() << endl;
+	cout << "w[0:" << removalPoint << "] \t\t preinsert old file contents." << endl;
+
+	//Write up to song to be removed
+	myio.write((char *)tempFile, removalPoint);
+
+	cout << "After writing up to song to be removed, I am here: " << removalPoint << endl;
+
+	//Helper variable to know where I am
+	long p = myio.tellp();
+	cout << "w[" << p << endl;
+
+
+
+
+
+
+//	myio.seekp((fileSize - s.blobSize - removalPoint), ios::beg);
+
+	//Write file after song that I want removed
+	myio.write(reinterpret_cast<char*>(tempFile - removalPoint), (fileSize - removalPoint));
+	
+	cout << "Writing rest of file" << endl;
+	
+		
+	return 0;
+}*/
 
 //Clear the song list
 int
@@ -264,60 +377,69 @@ TsuPod::sortList ()
 
 }
 
-//Dislay the list to the console
-void
-TsuPod::showList ()
+//Display the list to the console
+void TsuPod::showList ()
 {
-  Song s;
-  int timeout = 100;
-  myio.open ("tsupod_memory.dat", fstream::binary | fstream::in);
-  cout << "\n\nSong List: " << endl;
+  	Song s;
+  	
+	//Open file
+	myio.open ("tsupod_memory.dat", fstream::binary | fstream::in);
+  	cout << "\n\nSong List: " << endl;
 
-  for (int index = 0; index < csongs; index++)
-    {
-      long pos = myio.tellg ();
-      int textSize = sizeOf (index);
-      char text[textSize];
-      int size = 0;
-      cout << "textSize == " << textSize;
-      cout << "r[" << pos << ":";
-      myio.read (reinterpret_cast < char *>(text), textSize - 4);
-      myio.read (reinterpret_cast < char *>(&size), sizeof (int));
-      pos = myio.tellg ();
-      cout << pos << "] :: " << endl;
-      char *artist = text;
-      while (*(++artist) != '\0');
-      artist++;
+  	for (int index = 0; index < csongs; index++)
+    	{
+		//Variables
+      		long pos = myio.tellg ();
+      		int textSize = sizeOf(index);	//Size for text
+      		char text[textSize];	//Holds title and artist
+      		int size = 0;	//Holds size of song
 
-      string t (text);
-      string a (artist);
+      		cout << "textSize == " << textSize;
+      		cout << "r[" << pos << ":";
 
-      Song s (t, a, size);
-      cout << "TsuPod::showList::Song(\"" << s.getTitle () << "\", \"" << s.
-	getArtist () << "\", " << s.getSize () << ");" << endl;
+		//Read the data to be able to print out
+      		myio.read (reinterpret_cast < char *>(text), textSize - 4);
+      		myio.read (reinterpret_cast < char *>(&size), sizeof (int));
 
-    }
+      		pos = myio.tellg ();
+      		cout << pos << "] :: " << endl;
 
-  myio.close ();
+		//Assign artist
+      		char *artist = text;
+      		while (*(++artist) != '\0');
+      			artist++;
+
+		//Title, artist variables
+      		string t (text);
+      		string a (artist);
+
+		//Pass data to object
+      		Song s (t, a, size);
+      		cout << "TsuPod::showList::Song(\"" << s.getTitle () << "\", \"" << s.
+		getArtist () << "\", " << s.getSize () << ");" << endl;
+    	}
+	
+	//Display remaining memory to console
+	cout << "Total remaining memory: " << getRemainingMem(cmem) << endl;
+	
+	//Close file
+	myio.close ();
 }
 
 //Display the total memory space left over
-int
-TsuPod::getTotalMem ()
+int TsuPod::getTotalMem()
 {
-  return memory;
+  	return memory;
 }
 
 //Shuffle the song list into a different order
-int
-TsuPod::shuffle ()
+int TsuPod::shuffle()
 {
 
 }
 
 //Get the remaining memory space left over
-int
-TsuPod::getRemainingMem ()
+int TsuPod::getRemainingMem(int cmem)
 {
-//      return memTotal;
+      return (getTotalMem() - cmem);
 }

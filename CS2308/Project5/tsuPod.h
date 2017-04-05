@@ -28,6 +28,7 @@ void printOffsets();
 	
 	//Functions
 	int initialize();	
+	int checkAddSong(string T, string A, int S, int cmem);
 	int addSong(string T, string A, int S, int songNum);
 	int removeSong(Song s);
 	Song getSong(int);
@@ -37,7 +38,7 @@ int getRandomSongNumber();
 	void showList();
 	int getTotalMem();
 	int shuffle();
-	int getRemainingMem();
+	int getRemainingMem(int);
 };
 
 #endif

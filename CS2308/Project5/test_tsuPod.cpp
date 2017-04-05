@@ -17,7 +17,6 @@ int main()
 	TsuPod myPod(100, 25);
 
         myPod.addSong("Hello", "Adele", 1, 0);
-
 	myPod.addSong("Castle on the Hill", "Ed Sheeran",2, 0);
 	myPod.addSong("Paris", "Chain Smokers", 3, 0);
 	myPod.addSong("Issues", "Julia Michaels", 4, 0);
