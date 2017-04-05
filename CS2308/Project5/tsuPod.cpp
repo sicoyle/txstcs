@@ -13,7 +13,7 @@ Instructor: Komogortsev, TSU
 #include <cstdlib>
 #include <ctime>
 #include <cstring>
-
+#include <stdlib.h>
 #include <string>
 
 
@@ -33,6 +33,7 @@ TsuPod::TsuPod (int mem, int songCount)
   for (int i = 0; i < songCount; i++)
     *(offsets + i) = 0;
 
+srand(0);
 }
 int
 TsuPod::initialize ()
@@ -57,7 +58,34 @@ TsuPod::initialize ()
 
   return 0;
 }
-
+Song TsuPod::getSong(int pos) {                                                                                                                                         
+                                                                                                                                                                        
+myio.open("tsupod_memory.dat", fstream::binary | fstream::in);                                                                                                          
+                                                                                                                                                                        
+int blobSize = sizeOf(pos);                                                                                                                                             
+char blob[blobSize];                                                                                                                                                    
+int size = 0;                                                                                                                                                           
+                                                                                                                                                                        
+myio.seekg(getsOffset(pos), myio.beg);                                                                                                                                  
+                                                                                                                                                                        
+myio.read(reinterpret_cast<char *>(blob), blobSize - 4);                                                                                                                
+myio.read(reinterpret_cast<char *>(&size), sizeof(int));                                                                                                                
+                                                                                                                                                                        
+char *artist = blob;                                                                                                                                                    
+                while (*(++artist) != '\0');                                                                                                                            
+                        artist++;                                                                                                                                       
+                                                                                                                                                                        
+                //Title, artist variables                                                                                                                               
+                string t (blob);                                                                                                                                        
+                string a (artist);                                                                                                                                      
+                                                                                                                                                                        
+                //Pass data to object                                                                                                                                   
+                Song s (t, a, size);                                                                                                                                    
+                cout << "TsuPod::showList::Song(\"" << s.getTitle () << "\", \"" << s.getArtist () << "\", " << s.getSize () << ");" << endl;                           
+             myio.close();                                                                                                                                                           
+return s;                                                                                                                                                               
+                                                                                                                                                                        
+}                                                                                                                                                                       
 void
 TsuPod::updateOffsets (int pos, int d)
 {
@@ -68,6 +96,9 @@ if(++pos < csongs+1)
   updateOffsets (pos, d);
 }
 
+int TsuPod::getRandomSongNumber(){
+return rand() % csongs;
+}
 int
 TsuPod::sizeOf (int p)
 {
