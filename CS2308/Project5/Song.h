@@ -32,8 +32,8 @@ class Song
 
 	//Overload
 	//????????????
-//helpers
-int blobSize();
+	//helpers
+	int blobSize();
 	//Constructors
 	Song();
 	Song(string title, string artist, int size);

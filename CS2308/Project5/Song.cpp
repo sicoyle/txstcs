@@ -42,7 +42,7 @@ int Song::blobSize() {
 //void Song::setArtist(string a) {artist = a}
 //void Song::setSize(int s) {size = s}
 
-
+/*
 const bool Song::operator == (const Song &s2)
 {
 	bool status;
@@ -54,7 +54,7 @@ const bool Song::operator == (const Song &s2)
 
 	return status;
 }
-
+*/
 
 
 
