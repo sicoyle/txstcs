@@ -130,6 +130,10 @@ int TsuPod :: removeSong(string T, string A, int S, int songCount, int &tMem, in
 	//Declare object
 	Song mySong;								
 
+	if(T != mySong.getSongTitle() && A != mySong.getSongArtist() && S != mySong.getSongSize())
+		cout << "SUCCESS&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" << endl;
+
+
 	//Decrement total song count and memory
 	tSongs = tSongs - 1;
 	tMem = tMem - S;

@@ -20,10 +20,12 @@ int main()
 	int tSongs = tMem = 0;
 
 	//Display total memory
-	cout << "Total memory in tsupod: " << tMem << endl;		
+	int retCode = myPod.TotalMem();
+	cout << "Total memory in tsupod: " << retCode << endl << endl;
+			
 	
 	//Show that tsupod is initialized			
-	int retCode = myPod.initialize();
+	retCode = myPod.initialize();
 		cout << "tsupod successfully initialized: " << retCode << endl;
 
 	//Show initialized tsupod
@@ -99,6 +101,11 @@ int main()
 	//Remove a song and display
 	retCode = myPod.removeSong("Side to Side", "Ariana Grande", 3, 7, tMem, tSongs);
 		cout << "Song successfully removed: " << retCode << endl;
+
+	//Show failure to remove a song
+	retCode = myPod.removeSong("Bad and Boujee", "Migos", 10, 8, tMem, tSongs);
+		cout << "Song unsuccesfully removed: " << retCode << endl;
+
 
 	myPod.showSongList();
 
