@@ -14,7 +14,7 @@ class TsuPod
 	private:
 		struct songNode
 		{
-			Song mySong;			//Song object
+			Song s;			//Song object
 			songNode * next;	//Ptr for next node
 		};
 		songNode * head;

@@ -60,7 +60,7 @@ int TsuPod::addSong(Song mySong)
 
 	//Initialize new node
 	newNode = new songNode;
-	newNode -> mySong = mySong;
+	newNode -> s = mySong;
 	newNode -> next = NULL;
 
 	//Increment consumed songs and memory
@@ -87,7 +87,7 @@ int TsuPod::addSong(Song mySong)
 }
 
 //Function to remove a song from the playlist
-int removeSong(Song mySong)
+int TsuPod::removeSong(Song mySong)
 {
 	//Variable for finding song to remove
 	bool found = false;
@@ -106,6 +106,7 @@ int removeSong(Song mySong)
 		return -1;
 	}
 
+	
 	
 
 
@@ -138,9 +139,9 @@ void TsuPod::showList()
 	//While there are still songs to print, show content and move to next song
 	while(nodePtr != NULL)
 	{
-		cout << left << setw(25) << nodePtr -> mySong.getTitle();
-		cout << left << setw(20) << nodePtr -> mySong.getArtist();
-		cout << left << setw(15) << nodePtr -> mySong.getSize() << endl;
+		cout << left << setw(25) << nodePtr -> s.getTitle();
+		cout << left << setw(20) << nodePtr -> s.getArtist();
+		cout << left << setw(15) << nodePtr -> s.getSize() << endl;
 
 		nodePtr = nodePtr -> next;
 	}
