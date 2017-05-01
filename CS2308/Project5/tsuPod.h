@@ -32,7 +32,7 @@ void printOffsets();
 	int addSong(string T, string A, int S, int songNum);
 	int removeSong(Song s);
 	Song getSong(int);
-	int getRandomSongNumber();
+int getRandomSongNumber();
 	int clearList();
 	int sortList();
 	void showList();

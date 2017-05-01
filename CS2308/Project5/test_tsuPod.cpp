@@ -53,5 +53,9 @@ int main()
 //	for ( int i = 0; i < 100; i++ )
 //		myPod.getSong(myPod.getRandomSongNumber());
 //
+for (int i = 4; i >= 0; i--)
+myPod.getSong(i);
+for ( int i = 0; i < 100; i++ )
+myPod.getSong(myPod.getRandomSongNumber());
 	return 0;	
 }

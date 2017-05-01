@@ -86,50 +86,16 @@ Song TsuPod::getSong(int pos)
 	return s;                                                                                                                                                               
 }       
 
+//Update the off sets                                                                                                                                                                
 void TsuPod::updateOffsets (int pos, int d)
 {
 	cout << "updating offsets:\t pos:" << pos << " d:" << d << endl;
 	cout << "\tcurr val: " << *(offsets+pos) << " - > new val: " << *(offsets+pos)+d << endl;
-  	*(offsets + (pos)) += d;
-	if(++pos < csongs+1)
-  		updateOffsets (pos, d);
-}
+  	//*(offsets + (pos)) += d;
+	d += *(offsets + (pos));
 
-Song TsuPod::getSong(int pos) {                                                                                                                                         
-                                                                                                                                                                        
-myio.open("tsupod_memory.dat", fstream::binary | fstream::in);                                                                                                          
-                                                                                                                                                                        
-int blobSize = sizeOf(pos);                                                                                                                                             
-char blob[blobSize];                                                                                                                                                    
-int size = 0;                                                                                                                                                           
-                                                                                                                                                                        
-myio.seekg(getsOffset(pos), myio.beg);                                                                                                                                  
-                                                                                                                                                                        
-myio.read(reinterpret_cast<char *>(blob), blobSize - 4);                                                                                                                
-myio.read(reinterpret_cast<char *>(&size), sizeof(int));                                                                                                                
-                                                                                                                                                                        
-char *artist = blob;                                                                                                                                                    
-                while (*(++artist) != '\0');                                                                                                                            
-                        artist++;                                                                                                                                       
-                                                                                                                                                                        
-                //Title, artist variables                                                                                                                               
-                string t (blob);                                                                                                                                        
-                string a (artist);                                                                                                                                      
-                                                                                                                                                                        
-                //Pass data to object                                                                                                                                   
-                Song s (t, a, size);                                                                                                                                    
-                cout << "TsuPod::showList::Song(\"" << s.getTitle () << "\", \"" << s.getArtist () << "\", " << s.getSize () << ");" << endl;                           
-             myio.close();                                                                                                                                                           
-return s;                                                                                                                                                               
-}                                                                                                                                                                       
-void
-TsuPod::updateOffsets (int pos, int d)
-{
-	cout << "updating offsets:\t pos:" << pos << " d:" << d << endl;
-	cout << "\tcurr val: " << *(offsets+pos) << " - > new val: " << *(offsets+pos)+d << endl;
-  	*(offsets + (pos)) += d;
-	if(++pos < csongs+1)
-  		updateOffsets (pos, d);
+	if(++pos < csongs + 1)
+  		updateOffsets(pos, d);
 }
 
 //Get a random song number to help with shuffling
@@ -138,15 +104,12 @@ int TsuPod::getRandomSongNumber()
 	return rand() % csongs;
 }
 
-int TsuPod::getRandomSongNumber(){
-return rand() % csongs;
-}
 //Return the size of position
 int TsuPod::sizeOf (int p)
 {
 	if(p<=0)
 		return *(offsets);
-  	return (getsOffset (p+1) - getsOffset (p));
+  	return (offsets[p] - offsets[p - 1]);
 }
 
 //Get the offset value for position
@@ -260,7 +223,8 @@ int TsuPod::insertSong (Song s, int pos)
 		*(offsets) = s.blobSize();
 	
 	//Update offsets
-	updateOffsets (pos+1, s.blobSize());
+	else
+		updateOffsets (pos, s.blobSize());
 	cout << "postupdate!!!!:" << endl;
 	printOffsets();
 
@@ -312,15 +276,9 @@ int TsuPod::addSong(string T, string A, int S, int position)
 
 	return 0;
 }
-<<<<<<< HEAD
 
 //Remove the song from playlist
 int TsuPod::removeSong(Song s)
-=======
-/*
-//Remove desired song to playlist
-int TsuPod::removeSong (Song s)
->>>>>>> 621992af283976d395e62685be75ed4f29fbb3fd
 {
 	//Update song count and mem
 	csongs--;
@@ -335,7 +293,7 @@ int TsuPod::removeSong (Song s)
 	}
 	
 	return 0;
-}*/
+}
 
 //Clear the song list
 int
