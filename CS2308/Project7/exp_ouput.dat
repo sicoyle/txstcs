@@ -1,0 +1,16 @@
+((a+b)-6 === missing 1 ) 
+(a+b)+ [b] === valid expression
+(a+b]-6 === missing 1 [ 1 ) 
+[(hey)-9] === valid expression
+(sam) - [cass]] + {9} === missing 1 [ 
+(hi))+[8 === missing 1 ] 1 ( 
+(hey) - 8] === missing 1 [ 
+(hello) + [goodbye] === valid expression
+((hi + [1 - [[[[4 === missing 5 ] 2 )  Error: there are more than 6 elements missing from expression.
+(hello) === valid expression
+((hi - ]]] === missing 3 [ 2 ) 
+(8) + [9] === valid expression
+0 - ] === missing 1 [ 
+(98)[0] === valid expression
+(1)(9 === missing 1 ) 
+(99)(1)) === missing 1 ( 

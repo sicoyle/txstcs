@@ -1,3 +1,4 @@
+#include <fstream>
 #include <iostream>
 #include <string.h>
 #define MAX_SIZE 100
@@ -98,9 +99,28 @@ bool checkBalancedParenthesis(char exp[])
 }
 int main(int argc, char* argv[])
 {
+    ifstream fin;
+    ofstream fout;
+    string file;
+
+    cout << "File name: ";
+    cin >> file;
+
+    fin.open(file.c_str());
+    fout.open("exp_output.dat");
+
     char str[MAX_SIZE];
     cout<<"Enter parenthesis expression that you wish to check for:"<<endl;
     cin>>str;
+
+    char * equation;
+
+    do
+    {
+	getline(cin, equation);
+    }while(!fin.eof());
+
+
     if(checkBalancedParenthesis(str) == true)
         cout<<"Given expression is balanced";
     else
