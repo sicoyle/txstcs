@@ -5,19 +5,19 @@
 #define MAX_SIZE 100
 using namespace std;
 class stack{
-    char data[MAX_SIZE];
+    char stackArray[MAX_SIZE];
     int top;
 public:
     stack()
     {
         top = -1;
     }
-    bool push(char ch)
+    bool push(char c)
     {
         if (top < MAX_SIZE-1)
         {
             top++;
-            data[top] = ch;            
+            stackArray[top] = c;            
             return true;
         }
         return false;
@@ -26,9 +26,9 @@ public:
     {
         if(top>=0)
         {
-            char ch = data[top];
+            char c = stackArray[top];
             top--;
-            return ch;
+            return c;
         }
         return '\0';
     }
@@ -50,48 +50,48 @@ public:
 */
 bool checkParenthesisMatch(char ch1, char ch2)
 {
-    bool result = false;
+    bool check = false;
     if(    (ch1 == ']' && ch2 == '[') ||
         (ch1 == '}' && ch2 == '{') ||
         (ch1 == ')' && ch2 == '(') )
-        result = true;
-    return result;
+        check = true;
+    return check;
 }
 /*
     checkBalancedParenthesis(char[]) would return false if parenthesis are not balanced.
 */
-bool checkBalancedParenthesis(char exp[])
+bool checkBalancedParenthesis(char equa[])
 {
-    int len = strlen(exp);
-    bool result = true;
+    int len = strlen(equa);
+    bool check = true;
     stack st;
     for(int i=0;i<len;i++)
     {
-        if(    (exp[i] == '[') ||
-            (exp[i] == '{') ||
-            (exp[i] == '(') )
+        if(    (equa[i] == '[') ||
+            (equa[i] == '{') ||
+            (equa[i] == '(') )
         {
-            st.push(exp[i]);
+            st.push(equa[i]);
         }
-        else if((exp[i] == ']') ||
-                (exp[i] == '}') ||
-                (exp[i] == ')') )
+        else if((equa[i] == ']') ||
+                (equa[i] == '}') ||
+                (equa[i] == ')') )
         {
-            if(checkParenthesisMatch(exp[i],st.pop()) == false)
+            if(checkParenthesisMatch(equa[i],st.pop()) == false)
             {
-                result = false;
+                check = false;
                 break;
             }
         }
     }
-    /*There exists a case where even after successful result from above statements
+    /*There exists a case where even after successful check from above statements
     still the possibility of imbalance exists; e.g., [{}()[()]  -->Missed one more 
     closing parenthesis. Check this case by checking stack space
     */
     if(st.isEmpty()== false)
-        result = false;
+        check = false;
 
-    return result;
+    return check;
 }
 int main(int argc, char* argv[])
 {
