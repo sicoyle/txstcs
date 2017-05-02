@@ -119,6 +119,8 @@ int main(int argc, char* argv[])
 		int rightParen = 0;
 		int size = equationVar.length();
 		equation = new char[size];
+		bool BracketFlag = false;
+		bool ParenthesesFlag = false;
 
 		strcpy(equation, equationVar.c_str());
 
@@ -147,31 +149,38 @@ int main(int argc, char* argv[])
 	        fout << " === valid expression";
 	    else
 	    {
-	        fout<<" === ";
+	        fout<<" === missing: ";
+
+		if(leftBrack != rightBrack)
+			BracketFlag = true;
+
+		if(leftParen != rightParen)
+			ParenthesesFlag = true;
 
 		//Display what the expression is missing if uneven # of elements
-		if(leftBrack != rightBrack)
+		if(BracketFlag)
 		{
 			if(rightBrack > leftBrack)
-				fout << "missing: " << (rightBrack - leftBrack) << " [ ";
+				fout << (rightBrack - leftBrack) << " [ ";
 			if(leftBrack > rightBrack)
-				fout << "missing: " << (leftBrack - rightBrack) << " ] ";
+				fout << (leftBrack - rightBrack) << " ] ";
 		}
 		
-		if(leftParen != rightParen)
+		if(ParenthesesFlag)
 		{
 			if(rightParen > leftParen)
-				fout << "missing: " << (rightParen - leftParen) << " ( ";
+				fout << (rightParen - leftParen) << " ( ";
 			if(leftParen > rightParen)
-				fout << "missing: " << (leftParen - rightParen) << " ) ";
+				fout << (leftParen - rightParen) << " ) ";
 		}
-
-		//Display what expression is missing with same # of elements
-		if((leftBrack == rightBrack) && (leftBrack != 0) && (rightBrack != 0))
-			fout << "missing: " << rightBrack << " ] " << leftBrack << " [ ";
-		if((leftParen == rightParen) && (leftParen != 0) && (rightParen != 0))
-			fout << "missing: " <<  rightParen << " ) " << leftParen << " ( ";
-		
+		if(!BracketFlag && !ParenthesesFlag)
+		{
+			//Display what expression is missing with same # of elements
+			if((leftBrack == rightBrack) && (leftBrack != 0) && (rightBrack != 0))
+				fout << rightBrack << " ] " << leftBrack << " [ ";
+			if((leftParen == rightParen) && (leftParen != 0) && (rightParen != 0))
+				fout << rightParen << " ) " << leftParen << " ( ";
+		}
 	    }
 		fout << endl;
 	}
