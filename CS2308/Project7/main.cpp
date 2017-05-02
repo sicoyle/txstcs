@@ -31,6 +31,7 @@ int main()
 	fin.open(fileName.c_str());
 //	fout.open("exp_output.dat");
 
+
 	if(fin.fail())
 	{
 		cout << "Error: input file did not open." << endl;
