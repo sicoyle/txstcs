@@ -245,8 +245,15 @@ int main(int argc, char* argv[])
 					(leftParen != 0) && (rightParen != 0))
 					fout << rightParen << " ) " << leftParen << " ( ";
 			}
+
+			//Error if 6+ errors:
+			if((leftBrack + rightBrack + leftParen + rightParen) > 6)
+				fout << "    Error: More than 6 missing elements ";
 	    	}
 		
+
+
+
 		//Seperate each line
 		fout << endl;
 	}
