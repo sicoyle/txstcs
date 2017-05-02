@@ -2,15 +2,18 @@
 #include <cmath>
 #include <iostream>
 #include <string.h>
-#define MAX_SIZE 100
+#define MAX_SIZE 256
 using namespace std;
 class stack{
-    char stackArray[MAX_SIZE];
+    char * stackArray;
+    int stackSize;
     int top;
 public:
-    stack()
+    stack(int size)
     {
         top = -1;
+	stackSize = size;
+	stackArray = new char(size);
     }
     bool push(char c)
     {
@@ -64,7 +67,7 @@ bool checkBalancedParenthesis(char equa[])
 {
     int len = strlen(equa);
     bool check = true;
-    stack st;
+    stack st(MAX_SIZE);
     for(int i=0;i<len;i++)
     {
         if(    (equa[i] == '[') ||
@@ -95,6 +98,7 @@ bool checkBalancedParenthesis(char equa[])
 }
 int main(int argc, char* argv[])
 {
+	
 	ofstream fout;
 	ifstream fin;
 	fout.open("exp_output.dat", ios::app);
