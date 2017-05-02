@@ -6,7 +6,7 @@
 (hi))+[8  === missing: 1 ] 1 ( 
 (hey) - 8]  === missing: 1 [ 
 (hello) + [goodbye]  === valid expression
-((hi + [1 - [[[[4  === missing: 5 ] 2 ) 
+((hi + [1 - [[[[4  === missing: 5 ] 2 )     Error: More than 6 missing elements 
 (hello)  === valid expression
 ((hi - ]]]  === missing: 3 [ 2 ) 
 (8) + [9]  === valid expression
@@ -17,3 +17,5 @@
 ((a+b)-6  === missing: 1 ) 
 [(a + b])  === missing: 1 ] 1 [ 1 ) 1 ( 
 )a+b(  === missing: 1 ) 1 ( 
+(((a-c - ]]]5  === missing: 3 [ 3 ) 
+(a( - 6]]]](  === missing: 4 [ 3 )     Error: More than 6 missing elements 
