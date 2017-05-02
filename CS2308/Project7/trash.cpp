@@ -15,6 +15,7 @@ public:
 	stackSize = size;
 	stackArray = new char(size);
     }
+    ~stack(){};
     bool push(char c)
     {
         if (top < MAX_SIZE-1)
