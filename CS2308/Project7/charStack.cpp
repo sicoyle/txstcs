@@ -16,10 +16,16 @@ using namespace std;
 //Function to check that the parenthese match in the equation
 bool charStack::checkParenthesisMatch(char ch1, char ch2)
 {
-	bool result = false;
+	int result = false;
 	
 	if((ch1 == ']' && ch2 == '[') || (ch1 == '}' && ch2 == '{') || (ch1 == ')' && ch2 == '('))
 		result = true;
+
+//	if((result == 1) && (ch1 == ']'))
+//		result = -1;
+//
+//	if((result == 1) && (ch1 == ')'))
+//		result = -2;
 	
 	return result;
 }
@@ -27,22 +33,11 @@ bool charStack::checkParenthesisMatch(char ch1, char ch2)
 //Function to write to the output file
 void charStack::writeToFile(char equa[], int s, charStack st)
 {
-	ofstream fout;
-	fout.open("exp_output.dat", ios::app);
-cout << "In write to file function." << endl;
-
-	if(fout.fail())
-	{
-		cout << "Error: output file did not open." << endl;
-		return;
-	}	
-cout << "Equation from write to file function: " << equa << endl;
-	fout << equa;	
 }
 
 //Function to check if the parentheses are balanced in the equation
 bool charStack::checkBalancedParenthesis(char equa[])
-{
+{	
 	ofstream fout;
 	fout.open("exp_ouput.dat", ios::app);
 	int equationSize = strlen(equa);
@@ -56,7 +51,7 @@ bool charStack::checkBalancedParenthesis(char equa[])
 	int parentheses = 0;
 
 	//Display the equation
-	fout<< equa;
+	fout<< equa << endl;
 	cout << "Equation: " << equa << " Equation size: " << equationSize << endl << "What is read into char array in for loop: ";
 
 	//Go through each char in expression
@@ -67,59 +62,69 @@ bool charStack::checkBalancedParenthesis(char equa[])
 			st.push(equa[s]);
 
 		//Increment counter for each element encountered
-		if(equa[s] == '(')
-			leftParen++;
-		else if(equa[s] == '[')
-			leftBrack++;  
-		else if(equa[s] == ')')
-			rightParen++;	
-		else if(equa[s] == ']')
-		{
-			rightBrack++;
-			cout << "    Increase right bracket counter" << endl;
-		}
+//		if(equa[s] == '(')
+//			leftParen++;
+//		else if(equa[s] == '[')
+//			leftBrack++;  
+//		else if(equa[s] == ')')
+//			rightParen++;	
+//		else if(equa[s] == ']')
+//		{
+//			rightBrack++;
+//			cout << "    Increase right bracket counter" << endl;
+//		}
 
 		//Return false for balanced expression for elements
-//		if((equa[s] == ']') || (equa[s] == ')'))
-//		{
+		else if((equa[s] == ']') || (equa[s] == ')'))
+		{
 			if(checkParenthesisMatch(equa[s], st.pop()) == false)
 			{
 				check = false;
-				//break;
-//			}
+				break;
+			}
 		}
 	}
 
 	//Get total number of brackets and parentheses
-	brackets = leftBrack - rightBrack;
-	parentheses = leftParen - rightParen;	
+//	brackets = leftBrack - rightBrack;
+//	parentheses = leftParen - rightParen;	
+
+	
+		
+
 
 	//If expression has an element missing, say it is missing something
-	if((brackets != 0) || (parentheses != 0))
-		fout << " === missing ";
+//	if((brackets != 0) || (parentheses != 0))
+//		fout << " === missing ";
 
 	//If expression has no elements missing, say it is valid
-	else if((brackets == 0) && (parentheses == 0))
-		fout << " === valid expression";
+//	else if((brackets == 0) && (parentheses == 0))
+//		fout << " === valid expression";
 
 	//Display what the expression is missing
-	if(brackets > 0)
-		fout << abs(brackets) << " ] ";
-	if(brackets < 0)
-		fout << abs(brackets) << " [ ";
-	if(parentheses > 0)
-		fout << abs(parentheses) << " ) ";
-	if(parentheses < 0)
-		fout << abs(parentheses) << " ( ";
+//	if(brackets > 0)
+//		fout << abs(brackets) << " ] ";
+//	if(brackets < 0)
+//		fout << abs(brackets) << " [ ";
+//	if(parentheses > 0)
+//		fout << abs(parentheses) << " ) ";
+//	if(parentheses < 0)
+//		fout << abs(parentheses) << " ( ";
 
 	//Display results to console
-	cout << "    RP " << rightParen << " LP " << leftParen << " RB " << rightBrack << " LB " << leftBrack <</*" RC " << rightCurly << " LC " << leftCurly << */endl;
+//	cout << "    RP " << rightParen << " LP " << leftParen << " RB " << rightBrack << " LB " << leftBrack <</*" RC " << rightCurly << " LC " << leftCurly << */endl;
 	
 	//Provide error message if more than 6 missing elements
-	if((brackets + parentheses) > 6)
-		fout << " Error: there are more than 6 elements missing from expression.";
+//	if((brackets + parentheses) > 6)
+//		fout << " Error: there are more than 6 elements missing from expression.";
 
-	fout << endl;
+//	fout << endl;
+
+//	if((brackets == 0) && (parenethese ++ 0))
+//	{
+//		for(int element = 0; element < equationSize; element++)
+//		{
+//			if(
 
 	//Last check for balanced elements in expression
 	if(st.isEmpty() == false)

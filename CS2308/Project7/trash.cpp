@@ -1,13 +1,7 @@
-#include <fstream>
 #include <iostream>
 #include <string.h>
 #define MAX_SIZE 100
-
 using namespace std;
-
-/*We need a stack with basic operations push, pop, isEmpty, isFull.
-This stack is required to store and pop the parenthesis for proper
-comparision in LIFO manner */
 class stack{
     char data[MAX_SIZE];
     int top;
@@ -34,7 +28,7 @@ public:
             top--;
             return ch;
         }
-        return 0;
+        return '\0';
     }
     bool isFull()
     {
@@ -99,31 +93,45 @@ bool checkBalancedParenthesis(char exp[])
 }
 int main(int argc, char* argv[])
 {
-    ifstream fin;
-    ofstream fout;
-    string file;
+	int leftBrack = 0;
+	int leftParen = 0;
+	int rightBrack = 0;
+	int rightParen = 0;
+	int brackets = 0;
+	int parentheses = 0; 
 
-    cout << "File name: ";
-    cin >> file;
 
-    fin.open(file.c_str());
-    fout.open("exp_output.dat");
-
-    char str[MAX_SIZE];
+   char str[MAX_SIZE];
     cout<<"Enter parenthesis expression that you wish to check for:"<<endl;
     cin>>str;
 
-    char * equation;
+	for(int index = 0; index < sizeof(str); index++)
+	{
+		if(str[index] == '(')
+			leftParen++;
+		else if(str[index] == '[')
+			leftBrack++;  
+		else if(str[index] == ')')
+			rightParen++;	
+		else if(str[index] == ']')
+			rightBrack++;
+	}
 
-    do
-    {
-	getline(cin, equation);
-    }while(!fin.eof());
+	//Get total number of brackets and parentheses
+	brackets = leftBrack - rightBrack;
+	parentheses = leftParen - rightParen;
 
+cout << "RP " << rightParen << " LP " << leftParen << " RB " << rightBrack << " LB " <<  leftBrack << endl;
 
     if(checkBalancedParenthesis(str) == true)
         cout<<"Given expression is balanced";
     else
+    {
         cout<<"Given expression is not balanced";
-    return 0;
+        if((brackets == 0) || (parentheses == 0))
+	{
+		cout << "Missing: " << leftBrack << " LB " << rightBrack << " RB " << leftParen << " LP " << rightParen << " RP " << endl;
+	}
+    }
+	return 0;
 }
