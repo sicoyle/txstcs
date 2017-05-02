@@ -1,102 +1,122 @@
+/*****************************************************
+Name: Samantha Coyle
+Date: 5/2/2017
+Problem Number: 7
+Hours spent solving the problem: 20
+Instructor: Komogortsev, TSU
+*****************************************************/
 #include <fstream>
 #include <cmath>
 #include <iostream>
 #include <string.h>
 #define MAX_SIZE 256
+
 using namespace std;
-class stack{
-    char * stackArray;
-    int stackSize;
-    int top;
-public:
-    stack(int size)
-    {
-        top = -1;
-	stackSize = size;
-	stackArray = new char(size);
-    }
-    ~stack(){};
-    bool push(char c)
-    {
-        if (top < MAX_SIZE-1)
-        {
-            top++;
-            stackArray[top] = c;            
-            return true;
-        }
-        return false;
-    }
-    char pop()
-    {
-        if(top>=0)
-        {
-            char c = stackArray[top];
-            top--;
-            return c;
-        }
-        return '\0';
-    }
-    bool isFull()
-    {
-        if(top >= MAX_SIZE-1)
-            return true;
-        return false;
-    }
-    bool isEmpty()
-    {
-        if(top < 0)
-            return true;
-        return false;
-    }
+
+//Create stack
+class stack
+{
+	private:
+		char * stackArray; //Dynamic array
+		int stackSize;
+		int top;
+	
+	public:
+		//Constructor
+		stack(int size)
+    		{
+        		top = -1;
+			stackSize = size;
+			stackArray = new char(size);
+    		}
+	
+		//Destructor
+    		~stack(){};
+
+		//Function to push characters to stack
+    		bool push(char c)
+    		{
+        		if (top < MAX_SIZE-1)
+        		{
+            			top++;
+            			stackArray[top] = c;            
+            			return true;
+        		}
+        		return false;
+    		}
+    	
+		//Function to remove characters from the stack
+		char pop()
+    		{
+        		if(top>=0)
+        		{
+            			char c = stackArray[top];
+            			top--;
+            			return c;
+        		}
+        		return '\0';
+    		}
+
+		//Function to check if stack is full or not
+    		bool isFull()
+    		{
+    			if(top >= MAX_SIZE-1)
+            			return true;
+        		return false;
+    		}
+   
+		//Function to check if stack has values in it or not
+		bool isEmpty()
+    		{
+        		if(top < 0)
+            			return true;
+        		return false;
+    		}
 };
-/*
-    checkParenthesisMatch(char,char) would return false if given chars are not appropriate.
-*/
+
+//Function to return if the chars are elements or not
 bool checkParenthesisMatch(char ch1, char ch2)
 {
-    bool check = false;
-    if(    (ch1 == ']' && ch2 == '[') ||
-        (ch1 == '}' && ch2 == '{') ||
-        (ch1 == ')' && ch2 == '(') )
-        check = true;
-    return check;
+	bool check = false;
+	if((ch1 == ']' && ch2 == '[') || (ch1 == '}' && ch2 == '{') ||
+    		(ch1 == ')' && ch2 == '(') )
+		check = true;
+	return check;
 }
-/*
-    checkBalancedParenthesis(char[]) would return false if parenthesis are not balanced.
-*/
+
+//Function to return if the elements in the expression are balanced
 bool checkBalancedParenthesis(char equa[])
 {
-    int len = strlen(equa);
-    bool check = true;
-    stack st(MAX_SIZE);
-    for(int i=0;i<len;i++)
-    {
-        if(    (equa[i] == '[') ||
-            (equa[i] == '{') ||
-            (equa[i] == '(') )
-        {
-            st.push(equa[i]);
-        }
-        else if((equa[i] == ']') ||
-                (equa[i] == '}') ||
-                (equa[i] == ')') )
-        {
-            if(checkParenthesisMatch(equa[i],st.pop()) == false)
-            {
-                check = false;
-                break;
-            }
-        }
-    }
-    /*There exists a case where even after successful check from above statements
-    still the possibility of imbalance exists; e.g., [{}()[()]  -->Missed one more 
-    closing parenthesis. Check this case by checking stack space
-    */
-    if(st.isEmpty()== false)
-        check = false;
+	//Variables
+	int equationSize = strlen(equa);
+	bool check = true;
+	stack st(MAX_SIZE);
 
-    return check;
+	//Loop through every element in expression
+	for(int index = 0; index < equationSize; index++)
+	{
+		//If ( or [ found, push to stack
+		if(((*(equa + index)) == '(') || ((*(equa + index)) == '['))
+	        	st.push(equa[index]);
+        
+		else if(((*(equa + index)) == ')') || ((*(equa + index)) == ']'))
+        	{
+        		if(checkParenthesisMatch((*(equa + index)),st.pop()) == false)
+            		{
+                		check = false;
+                		break;
+            		}
+        	}
+    	}
+    
+	//Last check to see if there is an element missing
+	if(st.isEmpty()== false)
+        	check = false;
+
+	return check;
 }
+
+//Main function to test the functions to see if balanced expression or not
 int main(int argc, char* argv[])
 {
 	
