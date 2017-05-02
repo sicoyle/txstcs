@@ -1,3 +1,5 @@
+#include <fstream>
+#include <cmath>
 #include <iostream>
 #include <string.h>
 #define MAX_SIZE 100
@@ -93,45 +95,87 @@ bool checkBalancedParenthesis(char exp[])
 }
 int main(int argc, char* argv[])
 {
-	int leftBrack = 0;
-	int leftParen = 0;
-	int rightBrack = 0;
-	int rightParen = 0;
-	int brackets = 0;
-	int parentheses = 0; 
+	ofstream fout;
+	ifstream fin;
+	fout.open("exp_output.dat", ios::app);
+	string fileName;
+	string equationVar;
+	char * equation;
+	cout << "Enter file name: ";
+	cin >> fileName;
+	fin.open(fileName.c_str());
 
-
-   char str[MAX_SIZE];
-    cout<<"Enter parenthesis expression that you wish to check for:"<<endl;
-    cin>>str;
-
-	for(int index = 0; index < sizeof(str); index++)
+	if(fin.fail())
 	{
-		if(str[index] == '(')
-			leftParen++;
-		else if(str[index] == '[')
-			leftBrack++;  
-		else if(str[index] == ')')
-			rightParen++;	
-		else if(str[index] == ']')
-			rightBrack++;
+		cout << "Error: file did not open" << endl;
+		return -1;
 	}
 
-	//Get total number of brackets and parentheses
-	brackets = leftBrack - rightBrack;
-	parentheses = leftParen - rightParen;
-
-cout << "RP " << rightParen << " LP " << leftParen << " RB " << rightBrack << " LB " <<  leftBrack << endl;
-
-    if(checkBalancedParenthesis(str) == true)
-        cout<<"Given expression is balanced";
-    else
-    {
-        cout<<"Given expression is not balanced";
-        if((brackets == 0) || (parentheses == 0))
+	while(getline(fin,equationVar))
 	{
-		cout << "Missing: " << leftBrack << " LB " << rightBrack << " RB " << leftParen << " LP " << rightParen << " RP " << endl;
+		int leftBrack = 0;
+		int leftParen = 0;
+		int rightBrack = 0;
+		int rightParen = 0;
+		int size = equationVar.length();
+		equation = new char[size];
+
+		strcpy(equation, equationVar.c_str());
+
+		for(int index = 0; index < size; index++)
+		{
+			if(equation[index] == '(')
+				leftParen++;
+			else if(equation[index] == '[')
+				leftBrack++;  
+			else if(equation[index] == ')')
+				rightParen++;	
+			else if(equation[index] == ']')
+				rightBrack++;
+		}
+
+		int brackets = 0;
+		int parentheses = 0; 
+	
+		//Get total number of brackets and parentheses
+		brackets = leftBrack + rightBrack;
+		parentheses = leftParen + rightParen;
+
+		fout << equation << " ";
+
+	    if(checkBalancedParenthesis(equation) == true)
+	        fout << " === valid expression";
+	    else
+	    {
+	        fout<<" === ";
+
+		//Display what the expression is missing if uneven # of elements
+		if(leftBrack != rightBrack)
+		{
+			if(rightBrack > leftBrack)
+				fout << "missing: " << (rightBrack - leftBrack) << " [ ";
+			if(leftBrack > rightBrack)
+				fout << "missing: " << (leftBrack - rightBrack) << " ] ";
+		}
+		
+		if(leftParen != rightParen)
+		{
+			if(rightParen > leftParen)
+				fout << "missing: " << (rightParen - leftParen) << " ( ";
+			if(leftParen > rightParen)
+				fout << "missing: " << (leftParen - rightParen) << " ) ";
+		}
+
+		//Display what expression is missing with same # of elements
+		if((leftBrack == rightBrack) && (leftBrack != 0) && (rightBrack != 0))
+			fout << "missing: " << rightBrack << " ] " << leftBrack << " [ ";
+		if((leftParen == rightParen) && (leftParen != 0) && (rightParen != 0))
+			fout << "missing: " <<  rightParen << " ) " << leftParen << " ( ";
+		
+	    }
+		fout << endl;
 	}
-    }
-	return 0;
+	
+	
+return 0;
 }
