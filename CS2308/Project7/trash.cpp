@@ -9,7 +9,7 @@ Instructor: Komogortsev, TSU
 #include <cmath>
 #include <iostream>
 #include <string.h>
-#define MAX_SIZE 256
+#define MAX_STACK_SIZE 256
 
 using namespace std;
 
@@ -25,93 +25,109 @@ class stack
 		//Constructor
 		stack(int size)
     		{
-        		top = -1;
 			stackSize = size;
 			stackArray = new char(size);
+        		top = -1;
     		}
 	
 		//Destructor
     		~stack(){};
 
-		//Function to push characters to stack
-    		bool push(char c)
-    		{
-        		if (top < MAX_SIZE-1)
-        		{
-            			top++;
-            			stackArray[top] = c;            
-            			return true;
-        		}
-        		return false;
-    		}
-    	
 		//Function to remove characters from the stack
 		char pop()
     		{
-        		if(top>=0)
+        		if(top >= 0)
         		{
-            			char c = stackArray[top];
+            			char c = (*(stackArray + top));
             			top--;
             			return c;
         		}
-        		return '\0';
+
+        		else
+				return '\0';
     		}
 
-		//Function to check if stack is full or not
-    		bool isFull()
+		//Function to push characters to stack
+    		bool push(char c)
     		{
-    			if(top >= MAX_SIZE-1)
-            			return true;
-        		return false;
-    		}
-   
+			bool check = false;
+
+        		if (top < (MAX_STACK_SIZE - 1))
+        		{
+            			top++;
+            			(*(stackArray + top)) = c;            
+            			check =  true;
+        		}
+			
+			//If stack is full, you can't push to it
+			if(isFull())
+				check = false;
+			
+			else
+        			return check;
+    		}    	
+
 		//Function to check if stack has values in it or not
 		bool isEmpty()
     		{
         		if(top < 0)
             			return true;
-        		return false;
+        		else
+				return false;
+    		}
+
+		//Function to check if stack is full or not
+    		bool isFull()
+    		{
+    			if(top >= (MAX_STACK_SIZE - 1))
+            			return true;
+			else
+	        		return false;
     		}
 };
 
 //Function to return if the chars are elements or not
-bool checkParenthesisMatch(char ch1, char ch2)
+bool checkElementsMatch(char c1, char c2)
 {
 	bool check = false;
-	if((ch1 == ']' && ch2 == '[') || (ch1 == '}' && ch2 == '{') ||
-    		(ch1 == ')' && ch2 == '(') )
+
+	if((c1 == ')' && c2 == '(') || (c1 == ']' && c2 == '['))
 		check = true;
+
 	return check;
 }
 
 //Function to return if the elements in the expression are balanced
-bool checkBalancedParenthesis(char equa[])
+bool checkElementsBalanced(char equa[])
 {
 	//Variables
-	int equationSize = strlen(equa);
+	stack st(MAX_STACK_SIZE); //Create object
 	bool check = true;
-	stack st(MAX_SIZE);
+	int equationSize = strlen(equa); //Get equation size
 
 	//Loop through every element in expression
 	for(int index = 0; index < equationSize; index++)
 	{
-		//If ( or [ found, push to stack
+		//If left element found, push to stack
 		if(((*(equa + index)) == '(') || ((*(equa + index)) == '['))
 	        	st.push(equa[index]);
         	
 		//If right element found, check if its opposite is in stack
-		else if(((*(equa + index)) == ')') || ((*(equa + index)) == ']'))
+		else if(((*(equa + index)) == ')') ||
+			((*(equa + index)) == ']'))
         	{
-        		if(checkParenthesisMatch((*(equa + index)),st.pop()) == false)
+			//If elements do not match, return false
+        		if(checkElementsMatch((*(equa + index)), st.pop())
+								== false)
             		{
-                		check = false;
-                		break;
+                		check = false; //return false
+                		break; //get out of loop
             		}
         	}
     	}
     
 	//Last check to see if there is an element missing
-	if(st.isEmpty()== false)
+	if(st.isEmpty() == false)
         	check = false;
 
 	return check;
@@ -183,7 +199,7 @@ int main(int argc, char* argv[])
 		fout << equation << " ";
 
 		//Display that expression is valid if elements are balanced
-		if(checkBalancedParenthesis(equation) == true)
+		if(checkElementsBalanced(equation) == true)
 	    		fout << " === valid expression";
 
 		//Display what is wrong with expression if not balanced
