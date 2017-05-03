@@ -8,5 +8,5 @@ t/6-[a+b)  === missing: 1 ] 1 (
 frog)))ab+c[[  === missing: 2 ] 3 ( 
 s+(pa)/m  === valid expression
 (l[i]+[z]/[ar(d+s)])  === valid expression
-(((((((((bacteria]]     Error: More than 6 missing elements  === missing: 
-(jh+)a/g*q))w[ty]][ga-((r((hf     Error: More than 6 missing elements  === missing: 
+(((((((((bacteria]]     Error: More than 6 missing elements 
+(jh+)a/g*q))w[ty]][ga-((r((hf     Error: More than 6 missing elements 

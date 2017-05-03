@@ -216,10 +216,8 @@ int main(int arg1, char * arg2[])
 
 			if(rightParen > leftParen)
 				rightParenFlag = true;
-
-
 		}
-cout << "Equation: " << equation << " LP: " << leftParen << " RP: " << rightParen << " LB: " << leftBrack << " RB: " << rightBrack << endl;
+
 		//Display the equation in output file
 		fout << equation << " ";
 
@@ -236,11 +234,15 @@ cout << "Equation: " << equation << " LP: " << leftParen << " RP: " << rightPare
 				fout << "    Error: More than 6 missing elements ";
 	        		errorFlag = true;
 			}
-			fout<<" === missing: ";
+			
+			//If there are less than 6 errors, 
+			//give generic missing message
+			if(!errorFlag)
+				fout << " === missing: ";
 
 			brackDifference = leftBrack - rightBrack;
 			parenDifference = leftParen - rightParen;
-cout << "Brackdifference: " << brackDifference << " parendifference: " << parenDifference << endl;
+
 			//Display what is missing if uneven # of brackets
 			if((leftBrack != rightBrack) && !errorFlag)
 			{
@@ -271,11 +273,11 @@ cout << "Brackdifference: " << brackDifference << " parendifference: " << parenD
 				(leftParen != 0) && (rightParen != 0) && rightParenFlag)
 					fout << rightParen << " ) " << leftParen << " ( ";
 			}
-
 	    	}
 		
 		//Seperate each line
 		fout << endl;
+
 	}//Close the while loop reading in the input file
 	
 	return 0;
