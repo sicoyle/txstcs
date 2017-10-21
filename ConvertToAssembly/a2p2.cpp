@@ -86,8 +86,9 @@ xitDW1:
 endI2://                  }
                   cout << endl;
 
-                  if (used1 > 1)
-                  {
+                  //if (used1 > 1)
+                  if (used1 <= 1) goto else3;
+begI3://                  {
                      hopPtr1 = a1;
                      endPtr1 = a1 + used1 - 1;
                      while (hopPtr1 < endPtr1)
@@ -180,17 +181,18 @@ endI2://                  }
                            *(a1+ 0) = truncAvg;
                            ++used1;
                         }
+			goto endI3;
                      }
-                  }
-                  else
-                  {
+//                  }
+else3://                  else
+        //          {
                      hopPtr1 = a1;
                      cout << am1dA1Str;
                      cout << *hopPtr1;
                      cout << endl;
                      used2 = 0;
                      used3 = 0;
-                  }
+endI3://                  }
 
                   cout << procA1Str;
                   if (used1 > 0)
