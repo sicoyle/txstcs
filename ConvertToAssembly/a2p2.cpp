@@ -69,17 +69,21 @@ WTest2:		  if(reply != 'n' && reply != 'N') goto begW2;
 endW2://		}
 
                   cout << begA1Str;
-                  if (used1 > 0)
-                  {
+                  //if (used1 > 0)
+                  if (used1 <= 0) goto endI2;
+begI2://                  {
                      hopPtr1 = a1;
                      endPtr1 = a1 + used1;
-                     do
-                     {
+begDW1://                     do
+         //            {
                         cout << *hopPtr1 << ' ' << ' ';
                         ++hopPtr1;
-                     }
-                     while (hopPtr1 < endPtr1);
-                  }
+//                     }
+endDW1://                     while (hopPtr1 < endPtr1);
+DWTest1:		if(hopPtr1 >= endPtr1) goto xitDW1;
+			if(hopPtr1 < endPtr1) goto begDW1;
+xitDW1:			
+endI2://                  }
                   cout << endl;
 
                   if (used1 > 1)
