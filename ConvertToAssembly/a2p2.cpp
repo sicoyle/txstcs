@@ -91,8 +91,9 @@ endI2://                  }
 begI3://                  {
                      hopPtr1 = a1;
                      endPtr1 = a1 + used1 - 1;
-                     while (hopPtr1 < endPtr1)
-                     {
+//                     while (hopPtr1 < endPtr1)
+                     goto WTest3;
+begW3://		     {
                         found = 0;
                         for (hopPtr2 = hopPtr1 + 1, endPtr2 = a1 + used1; hopPtr2 < endPtr2; ++hopPtr2)
                         {
@@ -117,7 +118,8 @@ begI3://                  {
                            }
                         }
                         ++hopPtr1;
-                     }
+WTest3:		     if (hopPtr1 < endPtr1) goto begW3;
+endW3://                     }
 
                      cout << am1dA1Str;
                      if (used1 > 0)
