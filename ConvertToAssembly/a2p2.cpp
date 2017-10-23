@@ -211,11 +211,12 @@ endI8://                           }
 FTest3:			if (hopPtr1 < endPtr1) goto begF3;
 endF3://                        }
 
-                        if (used1 == 0)
-                        {
+                        //if (used1 == 0)
+                        if (used1 != 0) goto endI10;
+begI10://                        {
                            *(a1+ 0) = truncAvg;
                            ++used1;
-                        }
+endI10://                        }
 			goto endI3;
 endI7://                     }
 //                  }
