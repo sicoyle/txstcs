@@ -95,12 +95,16 @@ begI3://                  {
                      goto WTest3;
 begW3://		     {
                         found = 0;
-                        for (hopPtr2 = hopPtr1 + 1, endPtr2 = a1 + used1; hopPtr2 < endPtr2; ++hopPtr2)
-                        {
-                           if (*hopPtr2 == *hopPtr1)
-                           {
-                              if (found == 1)
-                              {
+                        //for (hopPtr2 = hopPtr1 + 1, endPtr2 = a1 + used1; hopPtr2 < endPtr2; ++hopPtr2)
+			hopPtr2 = hopPtr1 + 1, endPtr2 = a1 + used1;
+			goto FTest1;
+begF1:                        //{
+                           //if (*hopPtr2 == *hopPtr1)
+                           if (*hopPtr2 != *hopPtr1) goto endI4;
+begI4://                           {
+                              //if (found == 1)
+                              if (found != 1) goto else5;
+begI5://                              {
                                  for (hopPtr3 = hopPtr2 + 1, endPtr3 = a1 + used1; hopPtr3 < endPtr3; ++hopPtr3)
                                  {
                                     *(hopPtr3 - 1) = *hopPtr3;
@@ -110,13 +114,17 @@ begW3://		     {
                                  --endPtr2;
                                  --endPtr3;
                                  --hopPtr2;
-                              }
-                              else
-                              {
+                              goto endI5;
+			      //}
+else5://                              else
+        //                      {
                                 ++found;
-                              }
-                           }
-                        }
+endI5://                              }
+endI4://                           }
+			++hopPtr2;
+FTest1:			if (hopPtr2 < endPtr2) goto begF1;
+endF1: 
+			//}
                         ++hopPtr1;
 WTest3:		     if (hopPtr1 < endPtr1) goto begW3;
 endW3://                     }
