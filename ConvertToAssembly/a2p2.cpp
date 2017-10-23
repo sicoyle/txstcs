@@ -232,7 +232,8 @@ endI3://                  }
 
                   cout << procA1Str;
                   if (used1 > 0)
-                  {
+                  if (used1 <= 0) goto endI11;
+begI11://                  {
                      hopPtr1 = a1;
                      endPtr1 = a1 + used1;
                      do
@@ -241,7 +242,7 @@ endI3://                  }
                         ++hopPtr1;
                      }
                      while (hopPtr1 < endPtr1);
-                  }
+endI11://                  }
                   cout << endl;
 
                   cout << procA2Str;
