@@ -236,12 +236,15 @@ endI3://                  }
 begI11://                  {
                      hopPtr1 = a1;
                      endPtr1 = a1 + used1;
-                     do
-                     {
+        //             do
+begDW4://                     {
                         cout << *hopPtr1 << ' ' << ' ';
                         ++hopPtr1;
-                     }
-                     while (hopPtr1 < endPtr1);
+endDW4://                     }
+DWTest4://                     while (hopPtr1 < endPtr1);
+		  if (hopPtr1 >= endPtr1) goto xitDW4;
+		  if (hopPtr1 < endPtr1) goto begDW4;
+xitDW4:
 endI11://                  }
                   cout << endl;
 
