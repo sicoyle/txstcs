@@ -158,12 +158,15 @@ begI7://                     {
                         sum = 0;
                         hopPtr1 = a1 + used1 - 1;
                         endPtr1 = a1;
-                        do
-                        {
+                        //do
+begDW3://                        {
                            sum += *hopPtr1;
                            --hopPtr1;
-                        }
-                        while (hopPtr1 >= endPtr1);
+endDW3://                        }
+//                        while (hopPtr1 >= endPtr1);
+DWTest3:		if (hopPtr1 < endPtr1) goto xitDW3;
+			if (hopPtr1 >= endPtr1) goto begDW3;
+xitDW3:
                         truncAvg = sum / used1;
 
                         used2 = 0;
