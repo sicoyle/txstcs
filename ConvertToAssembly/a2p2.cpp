@@ -178,8 +178,9 @@ xitDW3:
 			goto FTest3;
 begF3:
 	//		{
-                           if (*hopPtr1 != truncAvg)
-                           {
+                           //if (*hopPtr1 != truncAvg)
+                           if (*hopPtr1 == truncAvg) goto endI8;
+begI8://                           {
                               if (*hopPtr1 < truncAvg)
                               {
                                  *hopPtr2 = *hopPtr1;
@@ -199,7 +200,7 @@ begF3:
                               --used1;
                               --endPtr1;
                               --hopPtr1;
-                           }
+endI8://                           }
 			++hopPtr1;
 FTest3:			if (hopPtr1 < endPtr1) goto begF3;
 endF3://                        }
