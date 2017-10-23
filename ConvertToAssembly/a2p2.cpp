@@ -181,18 +181,20 @@ begF3:
                            //if (*hopPtr1 != truncAvg)
                            if (*hopPtr1 == truncAvg) goto endI8;
 begI8://                           {
-                              if (*hopPtr1 < truncAvg)
-                              {
+                              //if (*hopPtr1 < truncAvg)
+                              if (*hopPtr1 >= truncAvg) goto else9;
+begI9://                              {
                                  *hopPtr2 = *hopPtr1;
                                  ++used2;
                                  ++hopPtr2;
-                              }
-                              else
-                              {
+			      goto endI9;
+                             // }
+else9://                              else
+//                              {
                                  *hopPtr3 = *hopPtr1;
                                  ++used3;
                                  ++hopPtr3;
-                              }
+endI9://                              }
                               for (hopPtr11 = hopPtr1 + 1, endPtr11 = a1 + used1; hopPtr11 < endPtr11; ++hopPtr11)
                               {
                                  *(hopPtr11 - 1) = *hopPtr11;
