@@ -105,10 +105,15 @@ begI4://                           {
                               //if (found == 1)
                               if (found != 1) goto else5;
 begI5://                              {
-                                 for (hopPtr3 = hopPtr2 + 1, endPtr3 = a1 + used1; hopPtr3 < endPtr3; ++hopPtr3)
-                                 {
+                                 //for (hopPtr3 = hopPtr2 + 1, endPtr3 = a1 + used1; hopPtr3 < endPtr3; ++hopPtr3)
+                                 hopPtr3 = hopPtr2 + 1, endPtr3 = a1 + used1;
+				 goto FTest2;
+begF2:
+				 //{
                                     *(hopPtr3 - 1) = *hopPtr3;
-                                 }
+				    ++hopPtr3;
+FTest2:				  if (hopPtr3 < endPtr3) goto begF2;                                
+endF2://				  }
                                  --used1;
                                  --endPtr1;
                                  --endPtr2;
