@@ -173,8 +173,11 @@ xitDW3:
                         used3 = 0;
                         hopPtr2 = a2;
                         hopPtr3 = a3;
-                        for (hopPtr1 = a1, endPtr1 = a1 + used1; hopPtr1 < endPtr1; ++hopPtr1)
-                        {
+//                        for (hopPtr1 = a1, endPtr1 = a1 + used1; hopPtr1 < endPtr1; ++hopPtr1)
+                        hopPtr1 = a1, endPtr1 = a1 + used1;
+			goto FTest3;
+begF3:
+	//		{
                            if (*hopPtr1 != truncAvg)
                            {
                               if (*hopPtr1 < truncAvg)
@@ -197,7 +200,9 @@ xitDW3:
                               --endPtr1;
                               --hopPtr1;
                            }
-                        }
+			++hopPtr1;
+FTest3:			if (hopPtr1 < endPtr1) goto begF3;
+endF3://                        }
 
                         if (used1 == 0)
                         {
