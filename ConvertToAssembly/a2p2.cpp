@@ -135,17 +135,21 @@ WTest3:		     if (hopPtr1 < endPtr1) goto begW3;
 endW3://                     }
 
                      cout << am1dA1Str;
-                     if (used1 > 0)
-                     {
+                     //if (used1 > 0)
+                     if (used1 <= 0) goto endI6;
+begI6://                     {
                         hopPtr1 = a1;
                         endPtr1 = a1 + used1;
-                        do
-                        {
+                        //do
+begDW2://                        {
                            cout << *hopPtr1 << ' ' << ' ';
                            ++hopPtr1;
-                        }
-                        while (hopPtr1 < endPtr1);
-                     }
+endDW2://                        }
+//                        while (hopPtr1 < endPtr1);
+DWTest2:		 if (hopPtr1 >= endPtr1) goto xitDW2;
+			 if (hopPtr1 < endPtr1) goto begDW2;	
+xitDW2:	
+endI6://                     }
                      cout << endl;
 
                      if (used1 > 0)
