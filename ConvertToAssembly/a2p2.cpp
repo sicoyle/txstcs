@@ -195,10 +195,14 @@ else9://                              else
                                  ++used3;
                                  ++hopPtr3;
 endI9://                              }
-                              for (hopPtr11 = hopPtr1 + 1, endPtr11 = a1 + used1; hopPtr11 < endPtr11; ++hopPtr11)
-                              {
+                              //for (hopPtr11 = hopPtr1 + 1, endPtr11 = a1 + used1; hopPtr11 < endPtr11; ++hopPtr11)
+                              hopPtr11 = hopPtr1 + 1, endPtr11 = a1 + used1;
+			      goto FTest4;
+begF4://			      {
                                  *(hopPtr11 - 1) = *hopPtr11;
-                              }
+				 ++hopPtr11;
+FTest4:			      if (hopPtr11 < endPtr11) goto begF4;
+endF4://                              }
                               --used1;
                               --endPtr1;
                               --hopPtr1;
