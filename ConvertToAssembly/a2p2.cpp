@@ -268,8 +268,9 @@ endI12://                  }
                   cout << endl;
 
                   cout << procA3Str;
-                  if (used3 > 0)
-                  {
+                  //if (used3 > 0)
+                  if (used3 <= 0) goto endI13;
+begI13://                  {
                      hopPtr3 = a3;
                      endPtr3 = a3 + used3;
                      do
@@ -278,7 +279,7 @@ endI12://                  }
                         ++hopPtr3;
                      }
                      while (hopPtr3 < endPtr3);
-                  }
+endI13://                  }
                   cout << endl;
 
                   cout << dacStr;
