@@ -152,8 +152,9 @@ xitDW2:
 endI6://                     }
                      cout << endl;
 
-                     if (used1 > 0)
-                     {
+                     //if (used1 > 0)
+                     if (used1 <= 0) goto endI7;
+begI7://                     {
                         sum = 0;
                         hopPtr1 = a1 + used1 - 1;
                         endPtr1 = a1;
@@ -201,7 +202,7 @@ endI6://                     }
                            ++used1;
                         }
 			goto endI3;
-                     }
+endI7://                     }
 //                  }
 else3://                  else
         //          {
